@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Arrays;
+
 /**
  * A chessboard that can hold and rearrange chess pieces.
  * <p>
@@ -7,9 +9,10 @@ package chess;
  * signature of the existing methods.
  */
 public class ChessBoard {
+    private final ChessPiece[][] chessPieces;
 
     public ChessBoard() {
-        
+        chessPieces = new ChessPiece[8][8];
     }
 
     /**
@@ -19,7 +22,8 @@ public class ChessBoard {
      * @param piece    the piece to add
      */
     public void addPiece(ChessPosition position, ChessPiece piece) {
-        throw new RuntimeException("Not implemented");
+        // subtract one from index to match array
+        chessPieces[position.getRow() - 1][position.getColumn() - 1] = piece;
     }
 
     /**
@@ -30,7 +34,8 @@ public class ChessBoard {
      * position
      */
     public ChessPiece getPiece(ChessPosition position) {
-        throw new RuntimeException("Not implemented");
+        // subtract one from index to match array
+        return chessPieces[position.getRow() - 1][position.getColumn() - 1];
     }
 
     /**
@@ -39,5 +44,25 @@ public class ChessBoard {
      */
     public void resetBoard() {
         throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChessBoard that = (ChessBoard) o;
+        return Arrays.deepEquals(chessPieces, that.chessPieces);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(chessPieces);
+    }
+
+    @Override
+    public String toString() {
+        return "ChessBoard{" +
+                "chessPieces=" + Arrays.toString(chessPieces) +
+                '}';
     }
 }
