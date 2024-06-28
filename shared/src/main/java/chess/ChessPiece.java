@@ -1,6 +1,7 @@
 package chess;
 
 import chess.pieceMove.Bishop;
+import chess.pieceMove.King;
 import chess.pieceMove.Queen;
 import chess.pieceMove.Rook;
 
@@ -58,7 +59,7 @@ public class ChessPiece {
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition currPosition) {
         return switch (pieceType) {
-            case KING -> null;
+            case KING -> King.kingMove(board, currPosition, this.pieceColor);
             case QUEEN -> Queen.queenMove(board, currPosition, this.pieceColor);
             case BISHOP -> Bishop.bishopMove(board, currPosition, this.pieceColor);
             case KNIGHT -> null;

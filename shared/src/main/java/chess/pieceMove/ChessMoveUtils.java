@@ -10,13 +10,14 @@ import java.util.HashSet;
 
 public class ChessMoveUtils {
 
-    // First check for an enemy
+
     public static boolean checkEnemy(ChessBoard board, ChessPosition targetPosition, ChessGame.TeamColor color) {
-        return (board.getPiece(targetPosition).getTeamColor() != color) && (board.getPiece(targetPosition) != null);
+        return (board.getPiece(targetPosition) != null) && (board.getPiece(targetPosition).getTeamColor() != color);
     }
 
     public static void addPotentialMove(ChessBoard board, ChessPosition targetPosition, ChessMove nextMove,
                                  ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+        // First check for an enemy
         if (checkEnemy(board, targetPosition, color)) {
             potentialMoves.add(nextMove);
         }
