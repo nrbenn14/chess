@@ -1,9 +1,6 @@
 package chess;
 
-import chess.pieceMove.Bishop;
-import chess.pieceMove.King;
-import chess.pieceMove.Queen;
-import chess.pieceMove.Rook;
+import chess.pieceMove.*;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -62,7 +59,7 @@ public class ChessPiece {
             case KING -> King.kingMove(board, currPosition, this.pieceColor);
             case QUEEN -> Queen.queenMove(board, currPosition, this.pieceColor);
             case BISHOP -> Bishop.bishopMove(board, currPosition, this.pieceColor);
-            case KNIGHT -> null;
+            case KNIGHT -> Knight.knightMove(board, currPosition, this.pieceColor);
             case ROOK -> Rook.rookMove(board, currPosition, this.pieceColor);
             case PAWN -> null;
         };
