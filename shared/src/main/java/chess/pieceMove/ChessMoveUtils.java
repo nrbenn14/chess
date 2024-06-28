@@ -29,7 +29,7 @@ public class ChessMoveUtils {
     static void upRightCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
                              int currRow, int currCol, HashSet<ChessMove> possibleMoves) {
         int nextRow = currRow++;
-        int nextCol = currCol--;
+        int nextCol = currCol++;
 
         // make sure we don't break out of the board
         while (nextRow < 9 && nextCol < 9) {
@@ -56,11 +56,92 @@ public class ChessMoveUtils {
         }
     }
     static void upLeftCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
-                            int currRow, int currCol, HashSet<ChessMoveUtils> possibleMoves) {}
+                            int currRow, int currCol, HashSet<ChessMove> possibleMoves) {
+        int nextRow = currRow++;
+        int nextCol = currCol--;
+
+        // make sure we don't break out of the board
+        while (nextRow < 9 && nextCol > 0) {
+            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
+            ChessMove nextMove = new ChessMove(position, nextPosition, null);
+
+            // is there a piece?
+            if (board.getPiece(nextPosition) != null) {
+                // if so, is it an enemy piece? otherwise break
+                if (board.getPiece(nextPosition).getTeamColor() != color) {
+                    possibleMoves.add(nextMove);
+                }
+                break;
+            }
+
+            // nothing there, possible move
+            else {
+                possibleMoves.add(nextMove);
+            }
+
+            // incr for next check
+            nextRow++;
+            nextCol--;
+        }
+    }
     static void downRightCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
-                               int currRow, int currCol, HashSet<ChessMoveUtils> possibleMoves) {}
+                               int currRow, int currCol, HashSet<ChessMove> possibleMoves) {
+        int nextRow = currRow--;
+        int nextCol = currCol++;
+
+        // make sure we don't break out of the board
+        while (nextRow > 0 && nextCol < 9) {
+            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
+            ChessMove nextMove = new ChessMove(position, nextPosition, null);
+
+            // is there a piece?
+            if (board.getPiece(nextPosition) != null) {
+                // if so, is it an enemy piece? otherwise break
+                if (board.getPiece(nextPosition).getTeamColor() != color) {
+                    possibleMoves.add(nextMove);
+                }
+                break;
+            }
+
+            // nothing there, possible move
+            else {
+                possibleMoves.add(nextMove);
+            }
+
+            // incr for next check
+            nextRow--;
+            nextCol++;
+        }
+    }
     static void downLeftCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
-                              int currRow, int currCol, HashSet<ChessMoveUtils> possibleMoves) {}
+                              int currRow, int currCol, HashSet<ChessMove> possibleMoves) {
+        int nextRow = currRow--;
+        int nextCol = currCol--;
+
+        // make sure we don't break out of the board
+        while (nextRow > 0 && nextCol > 0) {
+            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
+            ChessMove nextMove = new ChessMove(position, nextPosition, null);
+
+            // is there a piece?
+            if (board.getPiece(nextPosition) != null) {
+                // if so, is it an enemy piece? otherwise break
+                if (board.getPiece(nextPosition).getTeamColor() != color) {
+                    possibleMoves.add(nextMove);
+                }
+                break;
+            }
+
+            // nothing there, possible move
+            else {
+                possibleMoves.add(nextMove);
+            }
+
+            // incr for next check
+            nextRow--;
+            nextCol--;
+        }
+    }
     static void upCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
                         int currRow, int currCol, HashSet<ChessMoveUtils> possibleMoves) {}
     static void downCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
