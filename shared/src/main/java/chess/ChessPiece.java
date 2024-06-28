@@ -61,7 +61,7 @@ public class ChessPiece {
             case BISHOP -> Bishop.bishopMove(board, currPosition, this.pieceColor);
             case KNIGHT -> Knight.knightMove(board, currPosition, this.pieceColor);
             case ROOK -> Rook.rookMove(board, currPosition, this.pieceColor);
-            case PAWN -> null;
+            case PAWN -> Pawn.pawnMove(board, currPosition, this.pieceColor);
         };
     }
 
