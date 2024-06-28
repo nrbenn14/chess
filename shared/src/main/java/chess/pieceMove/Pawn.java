@@ -18,7 +18,7 @@ public class Pawn extends ChessMoveUtils {
     }
 
     private static void whitePawnMove(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
-        if (color.equals(ChessGame.TeamColor.WHITE)) {
+        if (color == (ChessGame.TeamColor.WHITE)) {
             int nextRow = currRow + 1;
             int takeLeft = currCol - 1;
             int takeRight = currCol + 1;
@@ -32,18 +32,17 @@ public class Pawn extends ChessMoveUtils {
             if (nextRow < 9) {
                 // is there a piece?
                 if (board.getPiece(forwardOne) == null) {
-
-                    // first move of pawn?
-                    if (currRow == 2 && board.getPiece(forwardTwo) == null) {
-                        potentialMoves.add(new ChessMove(position, forwardOne, null));
-                        potentialMoves.add(new ChessMove(position, forwardTwo, null));
-                    }
                     // can move into promotion?
-                    else if (nextRow == 8) {
+                    if (nextRow == 8) {
                         potentialMoves.add(new ChessMove(position, forwardOne, ChessPiece.PieceType.BISHOP));
                         potentialMoves.add(new ChessMove(position, forwardOne, ChessPiece.PieceType.KNIGHT));
                         potentialMoves.add(new ChessMove(position, forwardOne, ChessPiece.PieceType.ROOK));
                         potentialMoves.add(new ChessMove(position, forwardOne, ChessPiece.PieceType.QUEEN));
+                    }
+                    // first move of pawn?
+                    else if (currRow == 2 && board.getPiece(forwardTwo) == null) {
+                        potentialMoves.add(new ChessMove(position, forwardOne, null));
+                        potentialMoves.add(new ChessMove(position, forwardTwo, null));
                     }
                     // normal front move
                     else {
@@ -55,13 +54,14 @@ public class Pawn extends ChessMoveUtils {
                 if (takeRight < 9) {
                     // is there an enemy piece?
                     if (board.getPiece(captureRight) != null && board.getPiece(captureRight).getTeamColor() != color) {
-
+                        // capture into promotion?
                         if (nextRow == 8) {
                             potentialMoves.add(new ChessMove(position, captureRight, ChessPiece.PieceType.BISHOP));
                             potentialMoves.add(new ChessMove(position, captureRight, ChessPiece.PieceType.KNIGHT));
                             potentialMoves.add(new ChessMove(position, captureRight, ChessPiece.PieceType.ROOK));
                             potentialMoves.add(new ChessMove(position, captureRight, ChessPiece.PieceType.QUEEN));
                         }
+                        // normal capture
                         else {
                             potentialMoves.add(new ChessMove(position, captureRight, null));
                         }
@@ -72,13 +72,14 @@ public class Pawn extends ChessMoveUtils {
                 if (takeRight >= 1) {
                     // is there an enemy piece?
                     if (board.getPiece(captureLeft) != null && board.getPiece(captureLeft).getTeamColor() != color) {
-
+                        // capture into promotion?
                         if (nextRow == 8) {
                             potentialMoves.add(new ChessMove(position, captureLeft, ChessPiece.PieceType.BISHOP));
                             potentialMoves.add(new ChessMove(position, captureLeft, ChessPiece.PieceType.KNIGHT));
                             potentialMoves.add(new ChessMove(position, captureLeft, ChessPiece.PieceType.ROOK));
                             potentialMoves.add(new ChessMove(position, captureLeft, ChessPiece.PieceType.QUEEN));
                         }
+                        // normal capture
                         else {
                             potentialMoves.add(new ChessMove(position, captureLeft, null));
                         }
@@ -89,10 +90,11 @@ public class Pawn extends ChessMoveUtils {
     }
 
     private static void blackPawnMove(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
-        if (color.equals(ChessGame.TeamColor.WHITE)) {
+        if (color == (ChessGame.TeamColor.BLACK)) {
             int nextRow = currRow - 1;
-            int takeLeft = currCol + 1;
-            int takeRight = currCol - 1;
+            // does the orientation of R/L matter?
+            int takeLeft = currCol - 1;
+            int takeRight = currCol + 1;
             int firstMove = currRow - 2;
 
             ChessPosition forwardOne = new ChessPosition(nextRow, currCol);
@@ -103,18 +105,17 @@ public class Pawn extends ChessMoveUtils {
             if (nextRow > 0) {
                 // is there a piece?
                 if (board.getPiece(forwardOne) == null) {
-
-                    // first move of pawn?
-                    if (currRow == 7 && board.getPiece(forwardTwo) == null) {
-                        potentialMoves.add(new ChessMove(position, forwardOne, null));
-                        potentialMoves.add(new ChessMove(position, forwardTwo, null));
-                    }
                     // can move into promotion?
-                    else if (nextRow == 1) {
+                    if (nextRow == 1) {
                         potentialMoves.add(new ChessMove(position, forwardOne, ChessPiece.PieceType.BISHOP));
                         potentialMoves.add(new ChessMove(position, forwardOne, ChessPiece.PieceType.KNIGHT));
                         potentialMoves.add(new ChessMove(position, forwardOne, ChessPiece.PieceType.ROOK));
                         potentialMoves.add(new ChessMove(position, forwardOne, ChessPiece.PieceType.QUEEN));
+                    }
+                    // first move of pawn?
+                    else if (currRow == 7 && board.getPiece(forwardTwo) == null) {
+                        potentialMoves.add(new ChessMove(position, forwardOne, null));
+                        potentialMoves.add(new ChessMove(position, forwardTwo, null));
                     }
                     // normal front move
                     else {
@@ -122,17 +123,18 @@ public class Pawn extends ChessMoveUtils {
                     }
                 }
 
-                // check for capture right
-                if (takeRight < 9) {
+                // check for capture left
+                if (takeRight >= 1) {
                     // is there an enemy piece?
                     if (board.getPiece(captureRight) != null && board.getPiece(captureRight).getTeamColor() != color) {
-
+                        // capture into promotion?
                         if (nextRow == 1) {
                             potentialMoves.add(new ChessMove(position, captureRight, ChessPiece.PieceType.BISHOP));
                             potentialMoves.add(new ChessMove(position, captureRight, ChessPiece.PieceType.KNIGHT));
                             potentialMoves.add(new ChessMove(position, captureRight, ChessPiece.PieceType.ROOK));
                             potentialMoves.add(new ChessMove(position, captureRight, ChessPiece.PieceType.QUEEN));
                         }
+                        // normal capture
                         else {
                             potentialMoves.add(new ChessMove(position, captureRight, null));
                         }
@@ -140,16 +142,17 @@ public class Pawn extends ChessMoveUtils {
                 }
 
                 // check for capture left
-                if (takeRight >= 1) {
+                if (takeLeft < 9) {
                     // is there an enemy piece?
-                    if (board.getPiece(captureLeft) != null && board.getPiece(captureLeft).getTeamColor() != color) {
-
+                    if (board.getPiece(captureLeft) != null  && board.getPiece(captureLeft).getTeamColor() != color) {
+                        // capture into promotion
                         if (nextRow == 1) {
                             potentialMoves.add(new ChessMove(position, captureLeft, ChessPiece.PieceType.BISHOP));
                             potentialMoves.add(new ChessMove(position, captureLeft, ChessPiece.PieceType.KNIGHT));
                             potentialMoves.add(new ChessMove(position, captureLeft, ChessPiece.PieceType.ROOK));
                             potentialMoves.add(new ChessMove(position, captureLeft, ChessPiece.PieceType.QUEEN));
                         }
+                        // normal capture
                         else {
                             potentialMoves.add(new ChessMove(position, captureLeft, null));
                         }
@@ -158,6 +161,4 @@ public class Pawn extends ChessMoveUtils {
             }
         }
     }
-
-
 }
