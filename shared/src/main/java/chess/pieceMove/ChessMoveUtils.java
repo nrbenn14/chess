@@ -12,7 +12,7 @@ public class ChessMoveUtils {
 
     // First check for an enemy
     public static boolean checkEnemy(ChessBoard board, ChessPosition targetPosition, ChessGame.TeamColor color) {
-        return (board.getPiece(targetPosition) != null) && (board.getPiece(targetPosition).getTeamColor() != color);
+        return (board.getPiece(targetPosition).getTeamColor() != color) && (board.getPiece(targetPosition) != null);
     }
 
     public static void addPotentialMove(ChessBoard board, ChessPosition targetPosition, ChessMove nextMove,
@@ -28,8 +28,8 @@ public class ChessMoveUtils {
 
     static void upRightCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
                              int currRow, int currCol, HashSet<ChessMove> possibleMoves) {
-        int nextRow = currRow++;
-        int nextCol = currCol++;
+        int nextRow = currRow + 1;
+        int nextCol = currCol + 1;
 
         // make sure we don't break out of the board
         while (nextRow < 9 && nextCol < 9) {
@@ -57,8 +57,8 @@ public class ChessMoveUtils {
     }
     static void upLeftCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
                             int currRow, int currCol, HashSet<ChessMove> possibleMoves) {
-        int nextRow = currRow++;
-        int nextCol = currCol--;
+        int nextRow = currRow + 1;
+        int nextCol = currCol - 1;
 
         // make sure we don't break out of the board
         while (nextRow < 9 && nextCol > 0) {
@@ -86,8 +86,8 @@ public class ChessMoveUtils {
     }
     static void downRightCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
                                int currRow, int currCol, HashSet<ChessMove> possibleMoves) {
-        int nextRow = currRow--;
-        int nextCol = currCol++;
+        int nextRow = currRow - 1;
+        int nextCol = currCol + 1;
 
         // make sure we don't break out of the board
         while (nextRow > 0 && nextCol < 9) {
@@ -115,8 +115,8 @@ public class ChessMoveUtils {
     }
     static void downLeftCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
                               int currRow, int currCol, HashSet<ChessMove> possibleMoves) {
-        int nextRow = currRow--;
-        int nextCol = currCol--;
+        int nextRow = currRow - 1;
+        int nextCol = currCol - 1;
 
         // make sure we don't break out of the board
         while (nextRow > 0 && nextCol > 0) {
