@@ -143,12 +143,120 @@ public class ChessMoveUtils {
         }
     }
     static void upCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
-                        int currRow, int currCol, HashSet<ChessMoveUtils> possibleMoves) {}
+                        int currRow, int currCol, HashSet<ChessMove> possibleMoves) {
+        int nextRow = currRow + 1;
+//        int nextCol = currCol - 1;
+
+        // make sure we don't break out of the board
+        while (nextRow < 9) {
+            ChessPosition nextPosition = new ChessPosition(nextRow, currCol);
+            ChessMove nextMove = new ChessMove(position, nextPosition, null);
+
+            // is there a piece?
+            if (board.getPiece(nextPosition) != null) {
+                // if so, is it an enemy piece? otherwise break
+                if (board.getPiece(nextPosition).getTeamColor() != color) {
+                    possibleMoves.add(nextMove);
+                }
+                break;
+            }
+
+            // nothing there, possible move
+            else {
+                possibleMoves.add(nextMove);
+            }
+
+            // incr for next check
+            nextRow++;
+//            nextCol--;
+        }
+    }
     static void downCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
-                          int currRow, int currCol, HashSet<ChessMoveUtils> possibleMoves) {}
+                          int currRow, int currCol, HashSet<ChessMove> possibleMoves) {
+        int nextRow = currRow - 1;
+//        int nextCol = currCol - 1;
+
+        // make sure we don't break out of the board
+        while (nextRow > 0) {
+            ChessPosition nextPosition = new ChessPosition(nextRow, currCol);
+            ChessMove nextMove = new ChessMove(position, nextPosition, null);
+
+            // is there a piece?
+            if (board.getPiece(nextPosition) != null) {
+                // if so, is it an enemy piece? otherwise break
+                if (board.getPiece(nextPosition).getTeamColor() != color) {
+                    possibleMoves.add(nextMove);
+                }
+                break;
+            }
+
+            // nothing there, possible move
+            else {
+                possibleMoves.add(nextMove);
+            }
+
+            // incr for next check
+            nextRow--;
+//            nextCol--;
+        }
+    }
     static void rightCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
-                           int currRow, int currCol, HashSet<ChessMoveUtils> possibleMoves) {}
+                           int currRow, int currCol, HashSet<ChessMove> possibleMoves) {
+//        int nextRow = currRow + 1;
+        int nextCol = currCol + 1;
+
+        // make sure we don't break out of the board
+        while (nextCol < 9) {
+            ChessPosition nextPosition = new ChessPosition(currRow, nextCol);
+            ChessMove nextMove = new ChessMove(position, nextPosition, null);
+
+            // is there a piece?
+            if (board.getPiece(nextPosition) != null) {
+                // if so, is it an enemy piece? otherwise break
+                if (board.getPiece(nextPosition).getTeamColor() != color) {
+                    possibleMoves.add(nextMove);
+                }
+                break;
+            }
+
+            // nothing there, possible move
+            else {
+                possibleMoves.add(nextMove);
+            }
+
+            // incr for next check
+//            nextRow--;
+            nextCol++;
+        }
+    }
     static void leftCheck(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
-                          int currRow, int currCol, HashSet<ChessMoveUtils> possibleMoves) {}
+                          int currRow, int currCol, HashSet<ChessMove> possibleMoves) {
+        //        int nextRow = currRow + 1;
+        int nextCol = currCol - 1;
+
+        // make sure we don't break out of the board
+        while (nextCol > 0) {
+            ChessPosition nextPosition = new ChessPosition(currRow, nextCol);
+            ChessMove nextMove = new ChessMove(position, nextPosition, null);
+
+            // is there a piece?
+            if (board.getPiece(nextPosition) != null) {
+                // if so, is it an enemy piece? otherwise break
+                if (board.getPiece(nextPosition).getTeamColor() != color) {
+                    possibleMoves.add(nextMove);
+                }
+                break;
+            }
+
+            // nothing there, possible move
+            else {
+                possibleMoves.add(nextMove);
+            }
+
+            // incr for next check
+//            nextRow--;
+            nextCol--;
+        }
+    }
 
 }
