@@ -5,7 +5,7 @@ import chess.*;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class Pawn extends ChessMoveUtils {
+public class Pawn extends PieceMoveUtils {
     public static Collection<ChessMove> pawnMove(ChessBoard board, ChessPosition position, ChessGame.TeamColor color) {
         int currRow = position.getRow();
         int currCol = position.getColumn();

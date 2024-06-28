@@ -8,7 +8,7 @@ import chess.ChessPosition;
 
 import java.util.HashSet;
 
-public class ChessMoveUtils {
+public class PieceMoveUtils {
 
 
     public static boolean checkEnemy(ChessBoard board, ChessPosition targetPosition, ChessGame.TeamColor color) {

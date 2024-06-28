@@ -7,7 +7,7 @@ import chess.ChessPosition;
 
 import java.util.HashSet;
 
-public class King extends ChessMoveUtils {
+public class King extends PieceMoveUtils {
      public static HashSet<ChessMove> kingMove(ChessBoard board, ChessPosition position, ChessGame.TeamColor color) {
          int currRow = position.getRow();
          int currCol = position.getColumn();

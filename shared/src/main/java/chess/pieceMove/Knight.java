@@ -8,7 +8,7 @@ import chess.ChessPosition;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class Knight extends ChessMoveUtils {
+public class Knight extends PieceMoveUtils {
     public static Collection<ChessMove> knightMove(ChessBoard board, ChessPosition position, ChessGame.TeamColor color) {
         int currRow = position.getRow();
         int currCol = position.getColumn();

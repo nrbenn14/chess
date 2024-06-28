@@ -8,7 +8,7 @@ import chess.ChessPosition;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class Bishop extends ChessMoveUtils {
+public class Bishop extends PieceMoveUtils {
 
     public static Collection<ChessMove> bishopMove(ChessBoard board, ChessPosition position, ChessGame.TeamColor color) {
         int currRow = position.getRow();
