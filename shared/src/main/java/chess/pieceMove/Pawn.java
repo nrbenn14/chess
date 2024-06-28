@@ -69,7 +69,7 @@ public class Pawn extends ChessMoveUtils {
                 }
 
                 // check for capture left
-                if (takeRight >= 1) {
+                if (takeLeft >= 1) {
                     // is there an enemy piece?
                     if (board.getPiece(captureLeft) != null && board.getPiece(captureLeft).getTeamColor() != color) {
                         // capture into promotion?
@@ -93,8 +93,9 @@ public class Pawn extends ChessMoveUtils {
         if (color == (ChessGame.TeamColor.BLACK)) {
             int nextRow = currRow - 1;
             // does the orientation of R/L matter?
-            int takeLeft = currCol - 1;
-            int takeRight = currCol + 1;
+            // newsflash - it does
+            int takeLeft = currCol + 1;
+            int takeRight = currCol - 1;
             int firstMove = currRow - 2;
 
             ChessPosition forwardOne = new ChessPosition(nextRow, currCol);
