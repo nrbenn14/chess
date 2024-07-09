@@ -92,11 +92,18 @@ public class ChessGame {
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
         ChessPiece movePiece = board.getPiece(move.getStartPosition());
+
+        if (movePiece.getTeamColor() != turn) {
+            throw new InvalidMoveException();
+        }
+
         HashSet<ChessMove> movesList = (HashSet<ChessMove>) validMoves(move.getStartPosition());
         boolean legal = false;
 
         for (ChessMove moves : movesList) {
             if (move.equals(moves)) {
+
+                legal = true;
 
                 if (move.getPromotionPiece() != null) {
                     ChessPiece pawnPromote = new ChessPiece(turn, move.getPromotionPiece());
@@ -118,6 +125,10 @@ public class ChessGame {
 
                 break;
             }
+        }
+
+        if (!legal) {
+            throw new InvalidMoveException();
         }
     }
 
