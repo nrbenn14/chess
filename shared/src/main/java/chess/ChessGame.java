@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 
 /**
@@ -70,7 +71,21 @@ public class ChessGame {
      * @return True if the specified team is in check
      */
     public boolean isInCheck(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        for (int i = 1; i < 9; i++) {
+            for (int j = 1; j < 9; j++) {
+                ChessPosition position = new ChessPosition(i,j);
+                if ((board.getPiece(position) != null) && (board.getPiece(position).getTeamColor() != teamColor)) {
+                    HashSet<ChessMove> potentialMoves = (HashSet<ChessMove>) board.getPiece(position).pieceMoves(board, position);
+
+                    for (ChessMove moves : potentialMoves) {
+                        if (board.getPiece(moves.getEndPosition()).equals(new ChessPiece(teamColor, ChessPiece.PieceType.KING))) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     /**
