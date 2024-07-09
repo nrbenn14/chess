@@ -117,10 +117,10 @@ public class ChessGame {
                 board.addPiece(move.getStartPosition(), null);
 
                 if (getTeamTurn() == TeamColor.BLACK) {
-                    setTeamTurn(TeamColor.BLACK);
+                    setTeamTurn(TeamColor.WHITE);
                 }
                 else {
-                    setTeamTurn(TeamColor.WHITE);
+                    setTeamTurn(TeamColor.BLACK);
                 }
 
                 break;
@@ -180,7 +180,7 @@ public class ChessGame {
             for (int j = 1; j < 9; j++) {
                 ChessPosition position = new ChessPosition(i,j);
                 if ((board.getPiece(position) != null)) {
-                    if (board.getPiece(position).getTeamColor() != teamColor) {
+                    if (board.getPiece(position).getTeamColor() == teamColor) {
                         HashSet<ChessMove> potentialMoves = (HashSet<ChessMove>) validMoves(position);
 
                         return potentialMoves.isEmpty();
