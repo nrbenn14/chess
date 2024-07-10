@@ -13,9 +13,11 @@ import java.util.Objects;
 public class ChessGame {
 
     private TeamColor turn;
-    private ChessBoard board = new ChessBoard();
+    private ChessBoard board;
 
     public ChessGame() {
+        this.board = new ChessBoard();
+        board.resetBoard();
         turn = TeamColor.WHITE;
     }
 
@@ -174,7 +176,10 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        return isInCheck(teamColor) && isInStalemate(teamColor);
+        if (!isInCheck(teamColor)) {
+            return false;
+        }
+        return checkmateChecker(teamColor);
     }
 
     /**
@@ -185,23 +190,40 @@ public class ChessGame {
      * @return True if the specified team is in stalemate, otherwise false
      */
     public boolean isInStalemate(TeamColor teamColor) {
+        // If the team is in check, they can't be in stalemate
+        if (isInCheck(teamColor)) {
+            return false;
+        }
+
+        return checkmateChecker(teamColor);
+    }
+
+    public boolean checkmateChecker(TeamColor teamColor) {
         for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
                 ChessPosition position = new ChessPosition(i, j);
                 ChessPiece piece = board.getPiece(position);
-                if (piece != null) {
-                    if (piece.getTeamColor() == teamColor) {
-                        HashSet<ChessMove> validMoves = (HashSet<ChessMove>) validMoves(position);
+                if (piece != null && piece.getTeamColor() == teamColor) {
+                    Collection<ChessMove> potentialMoves = piece.pieceMoves(board, position);
 
-                        return validMoves.isEmpty();
+                    for (ChessMove moves : potentialMoves) {
+                        ChessGame nextBoard = new ChessGame();
 
+                        nextBoard.editBoard(board);
+
+                        nextBoard.board.addPiece(moves.getEndPosition(), piece);
+                        nextBoard.board.addPiece(moves.getStartPosition(), null);
+                        if (!nextBoard.isInCheck(teamColor)) {
+                            return false;
+                        }
                     }
                 }
             }
         }
 
-        return false;
+        return true;
     }
+
 
     /**
      * Sets this game's chessboard with a given board
