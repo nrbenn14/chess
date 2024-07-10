@@ -15,6 +15,7 @@ public class ChessBoard {
         chessPieces = new ChessPiece[8][8];
     }
 
+
     /**
      * Adds a chess piece to the chessboard
      *
@@ -67,6 +68,7 @@ public class ChessBoard {
         addPiece(new ChessPosition(8, 7), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KNIGHT));
         addPiece(new ChessPosition(8, 8), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.ROOK));
     }
+
 
     @Override
     public boolean equals(Object o) {
