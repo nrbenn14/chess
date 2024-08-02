@@ -5,7 +5,7 @@ import model.GameData;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class MemoryGameDAO implements GameDAO {
+public class MemoryGameDAO extends GameDAO {
     public Collection<GameData> gameData;
 
     public MemoryGameDAO() {
