@@ -1,9 +1,11 @@
 package dataaccess;
 
-public class GameDAO {
-    public void createGame() {}
-    public void readGame() {}
-    public void updateGame() {}
-    public void deleteGame() {}
-    public void clear() {}
+import model.GameData;
+
+
+public interface GameDAO {
+    public boolean createGame(GameData gameData);
+    public GameData readGame(int gameID) throws DataAccessException;
+    public void updateGame(GameData gameData) throws DataAccessException;
+    public void clear();
 }

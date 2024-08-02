@@ -1,10 +1,10 @@
 package dataaccess;
 
-public class UserDAO {
+import model.UserData;
 
-    public void createUser() {}
-    public void readUser() {}
-    public void updateUser() {}
-    public void deleteUser() {}
-    public void clear() {}
+public interface UserDAO {
+
+    public boolean createUser(UserData userData) throws DataAccessException;
+    public UserData readUser(String username);
+    public void clear();
 }
