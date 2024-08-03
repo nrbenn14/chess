@@ -62,6 +62,19 @@ public class UserService extends Service {
         throw new DataAccessException("Error: Authentication failed");
     }
 
+    public boolean logout(AuthData authData) throws DataAccessException {
+        AuthData authData1 = authDAO.readAuth(authData.getAuthToken());
+        String authToken = null;
+        if (authData1 != null) {
+            authToken = authData1.getAuthToken();
+        }
+        else {
+            throw new DataAccessException("Error: unauthorized");
+        }
+        authDAO.deleteAuth(authToken);
+        return true;
+    }
+
     public void clear() {
         userDAO.clear();
         authDAO.clear();

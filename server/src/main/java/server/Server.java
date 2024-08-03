@@ -19,13 +19,15 @@ public class Server {
         // Register your endpoints and handle exceptions here.
         Spark.post("/user", Handler.registerHandler);
         Spark.post("/session", Handler.loginHandler);
+        Spark.delete("/session", Handler.logoutHandler);
+        Spark.get("/game", Handler.listGamesHandler);
         Spark.delete("/db", Handler.clearHandler);
 
         Spark.exception(Exception.class, (e, request, response) -> {
             String message = e.getMessage();
             switch (message) {
                 case "Error: Username/password required" -> response.status(400);
-                case "Error: Username and/or password were incorrect" -> response.status(401);
+                case "Error: Username and/or password were incorrect", "Error: unauthorized" -> response.status(401);
                 case "Error: Username already exists" -> response.status(403);
                 default -> response.status(500);
             }
