@@ -29,7 +29,7 @@ public class Server {
             String message = e.getMessage();
             switch (message) {
                 case "Error: Username/password required", "Error: game name required",
-                        "Error: invalid team color" -> response.status(400);
+                        "Error: invalid team color", "Error: invalid game ID" -> response.status(400);
                 case "Error: Username and/or password were incorrect", "Error: unauthorized" -> response.status(401);
                 case "Error: Username already exists", "Error: team already taken" -> response.status(403);
                 default -> response.status(500);

@@ -26,7 +26,7 @@ public class MemoryGameDAO implements GameDAO {
     @Override
     public GameData readGame(int gameID) throws DataAccessException {
         if (gameID < 0 || gameID >= data.size()) {
-            throw new DataAccessException("Invalid game ID");
+            throw new DataAccessException("Error: invalid game ID");
         }
 
         return data.get(gameID);
