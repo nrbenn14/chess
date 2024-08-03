@@ -23,6 +23,14 @@ public class Handler {
         return GSON.toJson(authData);
     };
 
+    public static Route loginHandler = (Request request, Response response) -> {
+        UserData userData = GSON.fromJson(request.body(), UserData.class);
+        AuthData authData = userService.login(userData);
+
+        response.type("application/json");
+        return GSON.toJson(authData);
+    };
+
     public static Route clearHandler = (Request request, Response response) -> {
         userService.clear();
         gameService.clear();
