@@ -14,12 +14,12 @@ public class UserService extends Service {
 
     public AuthData register(UserData userData) throws DataAccessException {
         if (userData.getUsername() == null || userData.getPassword() == null) {
-            throw new DataAccessException("Username/passwork required");
+            throw new DataAccessException("Error: Username/password required");
         }
 
         UserData user = userDAO.readUser(userData.getUsername());
         if (user != null) {
-            throw new DataAccessException("Username already exists");
+            throw new DataAccessException("Error: Username already exists");
         }
 
         if (userDAO.createUser(userData)) {
@@ -32,22 +32,22 @@ public class UserService extends Service {
             return authData;
         }
 
-        throw new DataAccessException("New user not created");
+        throw new DataAccessException("Error: New user not created");
 
     }
 
     public AuthData login(UserData userData) throws DataAccessException {
         if (userData.getUsername() == null || userData.getPassword() == null) {
-            throw new DataAccessException("Username and password are required");
+            throw new DataAccessException("Error: Username/password required");
         }
 
         UserData user = userDAO.readUser(userData.getUsername());
         if (user == null) {
-            throw new DataAccessException("Username and/or password were incorrect");
+            throw new DataAccessException("Error: Username and/or password were incorrect");
         }
 
-        if (!Objects.equals(userData.getPassword(), user.getPassword())) {
-            throw new DataAccessException("Password was incorrect");
+        if (!Objects.equals(user.getPassword(), userData.getPassword())) {
+            throw new DataAccessException("Error: Username and/or password were incorrect");
         }
 
         String authToken = UUID.randomUUID().toString();
@@ -59,7 +59,7 @@ public class UserService extends Service {
             return authData;
         }
 
-        throw new DataAccessException("Authentication failed");
+        throw new DataAccessException("Error: Authentication failed");
     }
 
     public void clear() {
