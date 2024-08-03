@@ -69,6 +69,21 @@ public class Handler {
         return GSON.toJson(gamesList);
     };
 
+    public static Route createGameHandler = (Request request, Response response) -> {
+        String authToken = request.headers("authorization");
+        AuthData authData = new AuthData();
+        authData.setAuthToken(authToken);
+        authData.setUsername(null);
+
+        GameData gameName = GSON.fromJson(request.body(), GameData.class);
+
+        GameData game = gameService.createGame(authData, gameName);
+        game = new GameData(game.getGameID() + 1, game.getWhiteUsername(), game.getBlackUsername(), game.getGameName(), game.getGame());
+
+        response.type("application/json");
+        return GSON.toJson(game);
+    };
+
     public static Route clearHandler = (Request request, Response response) -> {
         userService.clear();
         gameService.clear();
