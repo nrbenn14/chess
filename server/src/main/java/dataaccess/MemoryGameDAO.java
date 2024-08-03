@@ -8,6 +8,7 @@ import java.util.Collection;
 
 public class MemoryGameDAO implements GameDAO {
     public ArrayList<GameData> data;
+    private static MemoryGameDAO memoryGameDAO;
 
     public MemoryGameDAO() {
         data = new ArrayList<GameData>();
@@ -45,5 +46,12 @@ public class MemoryGameDAO implements GameDAO {
     @Override
     public void clear() {
         data = new ArrayList<>();
+    }
+
+    public static MemoryGameDAO getMemoryGameDAO() {
+        if (memoryGameDAO == null) {
+            memoryGameDAO = new MemoryGameDAO();
+        }
+        return memoryGameDAO;
     }
 }

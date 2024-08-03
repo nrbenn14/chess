@@ -7,6 +7,7 @@ import java.util.Collection;
 
 public class MemoryAuthDAO implements AuthDAO {
     public ArrayList<AuthData> authData;
+    private static MemoryAuthDAO memoryAuthDAO;
 
     public MemoryAuthDAO() {
         authData = new ArrayList<>();
@@ -47,5 +48,10 @@ public class MemoryAuthDAO implements AuthDAO {
     @Override
     public void clear() {
         authData = new ArrayList<>();
+    }
+
+    public static MemoryAuthDAO getMemoryAuthDAO() {
+        if (memoryAuthDAO == null) {memoryAuthDAO = new MemoryAuthDAO();}
+        return memoryAuthDAO;
     }
 }

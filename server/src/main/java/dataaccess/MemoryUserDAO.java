@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 public class MemoryUserDAO implements UserDAO {
     public ArrayList<UserData> data;
+    private static MemoryUserDAO memoryUserDAO;
     public MemoryUserDAO() {
         data = new ArrayList<>();
     }
@@ -32,5 +33,12 @@ public class MemoryUserDAO implements UserDAO {
     @Override
     public void clear() {
         data = new ArrayList<>();
+    }
+
+    public static MemoryUserDAO getMemoryUserDAO() {
+        if (memoryUserDAO == null) {
+            memoryUserDAO = new MemoryUserDAO();
+        }
+        return memoryUserDAO;
     }
 }

@@ -2,15 +2,12 @@ package service;
 
 import dataaccess.UserDAO;
 
-public class UserService {
+public class UserService extends Service {
 
-    private final UserDAO userDAO;
 
-    public UserService(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
 
     public void clear() {
         userDAO.clear();
+        authDAO.clear();
     }
 }
