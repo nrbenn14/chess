@@ -11,7 +11,7 @@ public class MemoryGameDAO implements GameDAO {
     private static MemoryGameDAO memoryGameDAO;
 
     public MemoryGameDAO() {
-        data = new ArrayList<GameData>();
+        data = new ArrayList<>();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class MemoryGameDAO implements GameDAO {
 
     @Override
     public GameData readGame(int gameID) throws DataAccessException {
-        if (gameID < 0 || gameID >= data.size()) {
+        if (gameID >= data.size() || gameID < 0) {
             throw new DataAccessException("Error: invalid game ID");
         }
 
@@ -39,7 +39,7 @@ public class MemoryGameDAO implements GameDAO {
         }
 
         else {
-            throw new DataAccessException("Game does not exist");
+            throw new DataAccessException("Error: Game does not exist");
         }
     }
 
