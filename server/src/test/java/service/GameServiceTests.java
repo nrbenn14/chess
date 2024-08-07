@@ -66,10 +66,14 @@ public class GameServiceTests {
     @DisplayName("Create Game Test")
     public void createGame() throws Exception {
         GameData gameData = new GameData(3, null, null, "newGame", null);
-        gameService.createGame(user, gameData);
-
-        Assertions.assertNotNull(gameService.listGames(user).getLast());
-        Assertions.assertEquals("newGame", gameService.listGames(user).getLast().getGameName());
+        try {
+            gameService.createGame(user, gameData);
+            Assertions.assertNotNull(gameService.listGames(user).getLast());
+            Assertions.assertEquals("newGame", gameService.listGames(user).getLast().getGameName());
+        }
+        catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -86,9 +90,14 @@ public class GameServiceTests {
     @Test
     @DisplayName("List Games Test")
     public void listGames() throws Exception {
-        gameDAO.createGame(game1);
-        gameDAO.createGame(game2);
-        Assertions.assertEquals(gameDAO.listGames(), gameService.listGames(user));
+        try {
+            gameDAO.createGame(game1);
+            gameDAO.createGame(game2);
+            Assertions.assertEquals(gameDAO.listGames(), gameService.listGames(user));
+        }
+        catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test

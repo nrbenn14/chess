@@ -35,10 +35,16 @@ public class UserServiceTests {
     @DisplayName("Register Test")
     public void registerTest() throws Exception {
         UserData user = new UserData("sark", "bossman", "dillinger@encom.com");
-        AuthData authData =  userService.register(user);
 
-        Assertions.assertEquals(user.getUsername(), authData.getUsername());
-        Assertions.assertNotNull(authData.getAuthToken());
+
+        try {
+            AuthData authData =  userService.register(user);
+            Assertions.assertEquals(user.getUsername(), authData.getUsername());
+            Assertions.assertNotNull(authData.getAuthToken());
+        }
+        catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -52,9 +58,14 @@ public class UserServiceTests {
     @Test
     @DisplayName("Login Test")
     public void loginTest() throws Exception {
-        AuthData authData = userService.login(user1);
-        Assertions.assertEquals("tron", authData.getUsername());
-        Assertions.assertNotNull(authData.getAuthToken());
+        try {
+            AuthData authData = userService.login(user1);
+            Assertions.assertEquals("tron", authData.getUsername());
+            Assertions.assertNotNull(authData.getAuthToken());
+        }
+        catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -67,8 +78,13 @@ public class UserServiceTests {
     @Test
     @DisplayName("Logout Test")
     public void logoutTest() throws Exception {
-        Assertions.assertTrue(userService.logout(auth));
-        Assertions.assertNull(userService.authDAO.readAuth(auth.getAuthToken()));
+        try {
+            Assertions.assertTrue(userService.logout(auth));
+            Assertions.assertNull(userService.authDAO.readAuth(auth.getAuthToken()));
+        }
+        catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
