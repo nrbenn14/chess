@@ -1,4 +1,4 @@
-package chess.pieceMove;
+package chess.piece;
 
 import chess.ChessBoard;
 import chess.ChessGame;
@@ -32,9 +32,7 @@ public class King extends PieceMoveUtils {
         nextRow = currRow - 1;
         nextCol = currCol - 1;
         if (nextRow > 0 && nextCol > 0) {
-            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, nextRow, nextCol);
         }
     }
 
@@ -45,9 +43,7 @@ public class King extends PieceMoveUtils {
         nextRow = currRow - 1;
         nextCol = currCol + 1;
         if (nextRow > 0 && nextCol < 9) {
-            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, nextRow, nextCol);
         }
     }
 
@@ -58,9 +54,7 @@ public class King extends PieceMoveUtils {
         nextRow = currRow + 1;
         nextCol = currCol - 1;
         if (nextRow < 9 && nextCol > 0) {
-            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, nextRow, nextCol);
         }
     }
 
@@ -71,9 +65,7 @@ public class King extends PieceMoveUtils {
         nextRow = currRow + 1;
         nextCol = currCol + 1;
         if (nextRow < 9 && nextCol < 9) {
-            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, nextRow, nextCol);
         }
     }
 
@@ -83,9 +75,7 @@ public class King extends PieceMoveUtils {
         nextCol = currCol + 1;
 
         if (nextCol < 9) {
-            ChessPosition nextPosition = new ChessPosition(currRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, currRow, nextCol);
         }
     }
 
@@ -95,9 +85,7 @@ public class King extends PieceMoveUtils {
         nextCol = currCol - 1;
 
         if (nextCol > 0) {
-            ChessPosition nextPosition = new ChessPosition(currRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, currRow, nextCol);
         }
     }
 
@@ -107,9 +95,7 @@ public class King extends PieceMoveUtils {
         nextRow = currRow - 1;
 
         if (nextRow > 0) {
-            ChessPosition nextPosition = new ChessPosition(nextRow, currCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, nextRow, currCol);
         }
     }
 
@@ -119,9 +105,7 @@ public class King extends PieceMoveUtils {
          nextRow = currRow + 1;
 
          if (nextRow < 9) {
-             ChessPosition nextPosition = new ChessPosition(nextRow, currCol);
-             ChessMove nextMove = new ChessMove(position, nextPosition, null);
-             addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+             makeKingKnightMove(board, position, color, potentialMoves, nextRow, currCol);
          }
     }
 }
