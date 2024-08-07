@@ -30,6 +30,12 @@ public class PieceMoveUtils {
         return false;
     }
 
+    public static void makeKingKnightMove(ChessBoard board, ChessPosition position, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves, int nextRow, int nextCol) {
+        ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
+        ChessMove nextMove = new ChessMove(position, nextPosition, null);
+        addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+    }
+
     public static boolean checkEnemy(ChessBoard board, ChessPosition targetPosition, ChessGame.TeamColor color) {
         return (board.getPiece(targetPosition) != null) && (board.getPiece(targetPosition).getTeamColor() != color);
     }

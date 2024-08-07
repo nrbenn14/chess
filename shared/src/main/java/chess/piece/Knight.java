@@ -32,9 +32,7 @@ public class Knight extends PieceMoveUtils {
         int nextCol = currCol - 2;
 
         if (nextRow > 0 && nextCol > 0) {
-            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, nextRow, nextCol);
         }
     }
 
@@ -43,9 +41,7 @@ public class Knight extends PieceMoveUtils {
         int nextCol = currCol - 2;
 
         if (nextRow < 9 && nextCol > 0) {
-            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, nextRow, nextCol);
         }
     }
 
@@ -54,9 +50,7 @@ public class Knight extends PieceMoveUtils {
         int nextCol = currCol + 2;
 
         if (nextRow > 0 && nextCol < 9) {
-            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, nextRow, nextCol);
         }
     }
 
@@ -65,9 +59,7 @@ public class Knight extends PieceMoveUtils {
         int nextCol = currCol + 2;
 
         if (nextRow < 9 && nextCol < 9) {
-            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, nextRow, nextCol);
         }
     }
 
@@ -76,9 +68,7 @@ public class Knight extends PieceMoveUtils {
         int nextCol = currCol - 1;
 
         if (nextRow > 0 && nextCol > 0) {
-            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, nextRow, nextCol);
         }
     }
 
@@ -87,9 +77,7 @@ public class Knight extends PieceMoveUtils {
         int nextCol = currCol + 1;
 
         if (nextRow > 0 && nextCol < 9) {
-            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, nextRow, nextCol);
         }
     }
 
@@ -99,9 +87,7 @@ public class Knight extends PieceMoveUtils {
         int nextCol = currCol - 1;
 
         if (nextRow < 9 && nextCol > 0) {
-            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, nextRow, nextCol);
         }
     }
 
@@ -110,9 +96,7 @@ public class Knight extends PieceMoveUtils {
         int nextCol = currCol + 1;
 
         if (nextRow < 9 && nextCol < 9) {
-            ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
-            ChessMove nextMove = new ChessMove(position, nextPosition, null);
-            addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
+            makeKingKnightMove(board, position, color, potentialMoves, nextRow, nextCol);
         }
     }
 }
