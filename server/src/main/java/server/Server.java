@@ -3,6 +3,7 @@ package server;
 import com.google.gson.Gson;
 import dataaccess.*;
 import handler.Handler;
+import handler.RegisterHandler;
 import service.GameService;
 import service.UserService;
 import spark.*;
@@ -11,13 +12,17 @@ public class Server {
 
     private static final Gson GSON = new Gson();
 
+//    RegisterHandler registerHandler = new RegisterHandler();
+
     public int run(int desiredPort) {
         Spark.port(desiredPort);
 
+
         Spark.staticFiles.location("web");
+        RegisterHandler registerHandler = new RegisterHandler();
 
         // Register your endpoints and handle exceptions here.
-        Spark.post("/user", Handler.registerHandler);
+        Spark.post("/user", registerHandler::handle);
         Spark.post("/session", Handler.loginHandler);
         Spark.delete("/session", Handler.logoutHandler);
         Spark.get("/game", Handler.listGamesHandler);

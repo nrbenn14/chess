@@ -10,16 +10,10 @@ import java.util.ArrayList;
 
 public class GameService extends Service {
 
-    public boolean joinGame(AuthData authData, GameData gameData) throws DataAccessException {
-        AuthData authData1 = authDAO.readAuth(authData.getAuthToken());
-        String user = null;
-        if (authData1 != null) {
-            user = authData1.getAuthToken();
-        }
-        else {
-            throw new DataAccessException("Error: unauthorized");
-        }
+    AuthService authService = new AuthService();
 
+    public boolean joinGame(AuthData authData, GameData gameData) throws DataAccessException {
+        String user = authService.tokenAuthentication(authData.getAuthToken());
         GameData game = gameDAO.readGame(gameData.getGameID());
 
         if (game == null) {
@@ -49,19 +43,11 @@ public class GameService extends Service {
     }
 
     public GameData createGame(AuthData authData, GameData gameData) throws DataAccessException {
-        AuthData authData1 = authDAO.readAuth(authData.getAuthToken());
-        String user = null;
-        if (authData1 != null) {
-            user = authData1.getAuthToken();
-        }
-        else {
-            throw new DataAccessException("Error: unauthorized");
-        }
+        String user = authService.tokenAuthentication(authData.getAuthToken());
 
         if (gameData.getGameName() == null) {
             throw new DataAccessException("Error: game name required");
         }
-
 
         GameData game = new GameData(gameDAO.listGames().size(), null, null, gameData.getGameName(), new ChessGame());
         if (gameDAO.createGame(gameData)) {
@@ -72,21 +58,7 @@ public class GameService extends Service {
     }
 
     public ArrayList<GameData> listGames(AuthData authData) throws DataAccessException {
-        AuthData authData1 = authDAO.readAuth(authData.getAuthToken());
-//        if (authData1 == null) {
-//            throw new DataAccessException("Error: null");
-//        }
-        String user = null;
-        if (authData1 != null) {
-            user = authData1.getAuthToken();
-        }
-        else {
-            throw new DataAccessException("Error: unauthorized");
-        }
-
-//        if (gameDAO.listGames() == null) {
-//            throw new DataAccessException("Error: null 2");
-//        }
+        String user = authService.tokenAuthentication(authData.getAuthToken());
         return gameDAO.listGames();
     }
 
