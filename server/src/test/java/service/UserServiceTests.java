@@ -63,4 +63,27 @@ public class UserServiceTests {
         UserData user = new UserData("tron", "nofightuserstoday", "alan1@encom.com");
         Assertions.assertThrows(DataAccessException.class, () -> userService.login(user));
     }
+
+    @Test
+    @DisplayName("Logout Test")
+    public void logoutTest() throws Exception {
+        Assertions.assertTrue(userService.logout(auth));
+        Assertions.assertNull(userService.authDAO.readAuth(auth.getAuthToken()));
+    }
+
+    @Test
+    @DisplayName("Bad Logout Test")
+    public void badLogoutTest() throws Exception {
+        userService.logout(auth);
+        Assertions.assertThrows(DataAccessException.class, () -> userService.logout(auth));
+    }
+
+    @Test
+    @DisplayName("Clear Test")
+    public void clearTest() throws Exception {
+        userService.clear();
+        Assertions.assertNull(userService.authDAO.readAuth(auth.getAuthToken()));
+        Assertions.assertNull(userService.userDAO.readUser("clu"));
+        Assertions.assertNull(userService.userDAO.readUser("tron"));
+    }
 }
