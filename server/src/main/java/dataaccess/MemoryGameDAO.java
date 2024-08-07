@@ -16,11 +16,9 @@ public class MemoryGameDAO implements GameDAO {
 
     @Override
     public boolean createGame(GameData gameData) {
-        if (gameData.getGameID() == data.size()) {
-            data.add(gameData);
-            return true;
-        }
-        return false;
+        gameData.setGameID(data.size());
+        data.add(gameData);
+        return true;
     }
 
     @Override
