@@ -17,25 +17,29 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Handler {
-    private static final Gson GSON = new Gson();
-    private static UserService userService = new UserService();
-    private static GameService gameService = new GameService();
+    static final Gson GSON = new Gson();
+    static UserService userService = new UserService();
+    static GameService gameService = new GameService();
 
     public static class GamesList {
-        private ArrayList<GameData> gamesList;
+        private ArrayList<GameData> games;
 
         public GamesList(ArrayList<GameData> games) {
-            this.gamesList = games;
+            this.games = games;
         }
     }
 
-    public static Route registerHandler = (Request request, Response response) -> {
-        UserData userData = GSON.fromJson(request.body(), UserData.class);
-        AuthData authData = userService.register(userData);
+//    private static RegisterHandler registerHandler;
 
-        response.type("application/json");
-        return GSON.toJson(authData);
-    };
+//    public static Route handleRegister = (Request request, Response response) -> registerHandler.handle(request, response);
+
+//    public static Route registerHandler = (Request request, Response response) -> {
+//        UserData userData = GSON.fromJson(request.body(), UserData.class);
+//        AuthData authData = userService.register(userData);
+//
+//        response.type("application/json");
+//        return GSON.toJson(authData);
+//    };
 
     public static Route loginHandler = (Request request, Response response) -> {
         UserData userData = GSON.fromJson(request.body(), UserData.class);
@@ -53,7 +57,7 @@ public class Handler {
         userService.logout(authData);
 
         response.type("application/json");
-        return GSON.toJson(authData);
+        return "{}";
     };
 
     public static Route listGamesHandler = (Request request, Response response) -> {
@@ -62,15 +66,15 @@ public class Handler {
         authData.setUsername(null);
         authData.setAuthToken(authToken);
 
-        ArrayList<GameData> games = new ArrayList<>();
+        ArrayList<GameData> gamesList = new ArrayList<>();
         for (GameData gameData : gameService.listGames(authData)) {
-            games.add(new GameData(gameData.getGameID() + 1, gameData.getWhiteUsername(), gameData.getBlackUsername(), gameData.getGameName(), gameData.getGame()));
+            gamesList.add(new GameData(gameData.getGameID() + 1, gameData.getWhiteUsername(), gameData.getBlackUsername(), gameData.getGameName(), gameData.getGame()));
         }
 
-        GamesList gamesList = new GamesList(games);
+        GamesList games = new GamesList(gamesList);
 
         response.type("application/json");
-        return GSON.toJson(gamesList);
+        return GSON.toJson(games);
     };
 
     public static Route createGameHandler = (Request request, Response response) -> {
@@ -111,11 +115,11 @@ public class Handler {
             teamColor = jsonObject.get("playerColor").getAsString();
         }
 
-        if (Objects.equals(teamColor, "BLACK")) {
-            gameToJoin = new GameData(gameToJoin.getGameID(), null, teamColor, null, null);
-        }
-        else if (Objects.equals(teamColor, "WHITE")) {
+        if (Objects.equals(teamColor, "WHITE")) {
             gameToJoin = new GameData(gameToJoin.getGameID(), teamColor, null, null, null);
+        }
+        else if (Objects.equals(teamColor, "BLACK")) {
+            gameToJoin = new GameData(gameToJoin.getGameID(), null, teamColor, null, null);
         }
         else {
             throw new DataAccessException("Error: invalid team color");
