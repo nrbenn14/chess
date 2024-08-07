@@ -41,13 +41,13 @@ public class Handler {
 //        return GSON.toJson(authData);
 //    };
 
-    public static Route loginHandler = (Request request, Response response) -> {
-        UserData userData = GSON.fromJson(request.body(), UserData.class);
-        AuthData authData = userService.login(userData);
-
-        response.type("application/json");
-        return GSON.toJson(authData);
-    };
+//    public static Route loginHandler = (Request request, Response response) -> {
+//        UserData userData = GSON.fromJson(request.body(), UserData.class);
+//        AuthData authData = userService.login(userData);
+//
+//        response.type("application/json");
+//        return GSON.toJson(authData);
+//    };
 
     public static Route logoutHandler = (Request request, Response response) -> {
         String authToken = request.headers("authorization");
