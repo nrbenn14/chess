@@ -1,5 +1,6 @@
 package service;
 
+import dataaccess.DataAccessException;
 import model.AuthData;
 import model.UserData;
 import org.junit.jupiter.api.*;
@@ -22,7 +23,7 @@ public class UserServiceTests {
     }
 
     @BeforeEach
-    public static void setup() throws Exception {
+    public void setup() throws Exception {
         userService = new UserService();
         userService.clear();
         userService.userDAO.createUser(user1);
@@ -32,11 +33,34 @@ public class UserServiceTests {
 
     @Test
     @DisplayName("Register Test")
-    public static void registerTest() throws Exception {
+    public void registerTest() throws Exception {
         UserData user = new UserData("sark", "bossman", "dillinger@encom.com");
         AuthData authData =  userService.register(user);
 
-        Assertions.assertEquals(user.getUsername(), authData.getAuthToken());
+        Assertions.assertEquals(user.getUsername(), authData.getUsername());
         Assertions.assertNotNull(authData.getAuthToken());
+    }
+
+    @Test
+    @DisplayName("Existing User Register")
+    public void badRegister() throws Exception {
+        UserData user = new UserData("tron", "uh-oh", "rinzler@grid.com");
+
+        Assertions.assertThrows(DataAccessException.class, () -> userService.register(user));
+    }
+
+    @Test
+    @DisplayName("Login Test")
+    public void loginTest() throws Exception {
+        AuthData authData = userService.login(user1);
+        Assertions.assertEquals("tron", authData.getUsername());
+        Assertions.assertNotNull(authData.getAuthToken());
+    }
+
+    @Test
+    @DisplayName("Bad Password")
+    public void badLoginTest() throws Exception {
+        UserData user = new UserData("tron", "nofightuserstoday", "alan1@encom.com");
+        Assertions.assertThrows(DataAccessException.class, () -> userService.login(user));
     }
 }
