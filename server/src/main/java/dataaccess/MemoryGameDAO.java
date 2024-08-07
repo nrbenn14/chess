@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class MemoryGameDAO implements GameDAO {
-    public ArrayList<GameData> data;
+    private ArrayList<GameData> data;
     private static MemoryGameDAO memoryGameDAO;
 
     public MemoryGameDAO() {
@@ -32,7 +32,7 @@ public class MemoryGameDAO implements GameDAO {
 
     @Override
     public void updateGame(GameData gameData) throws DataAccessException {
-        if (gameData.getGameID() < data.size()) {
+        if (gameData.getGameID() < data.size() && gameData.getGameID() >= 0) {
             data.set(gameData.getGameID(), gameData);
         }
 
@@ -43,12 +43,12 @@ public class MemoryGameDAO implements GameDAO {
 
     @Override
     public ArrayList<GameData> listGames() {
-        return data;
+        return new ArrayList<>(data);
     }
 
     @Override
     public void clear() {
-        data = new ArrayList<>();
+        data.clear();
     }
 
     public static MemoryGameDAO getMemoryGameDAO() {

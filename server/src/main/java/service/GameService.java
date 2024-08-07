@@ -20,17 +20,7 @@ public class GameService extends Service {
             throw new DataAccessException("Error: game does not exist");
         }
         // See if one or both usernames are not taken, add player to game depending on result
-        if (gameData.getBlackUsername() != null) {
-            if (game.getBlackUsername() == null) {
-                GameData joinedGame = new GameData(game.getGameID(), game.getWhiteUsername(), user, game.getGameName(), game.getGame());
-                gameDAO.updateGame(joinedGame);
-                return true;
-            }
-
-            throw new DataAccessException("Error: team already taken");
-        }
-
-        else if (gameData.getWhiteUsername() != null) {
+        if (gameData.getWhiteUsername() != null && gameData.getBlackUsername() == null) {
             if (game.getWhiteUsername() == null) {
                 GameData joinedGame = new GameData(game.getGameID(), user, game.getBlackUsername(), game.getGameName(), game.getGame());
                 gameDAO.updateGame(joinedGame);
@@ -39,7 +29,17 @@ public class GameService extends Service {
 
             throw new DataAccessException("Error: team already taken");
         }
-        return false;
+
+        else if (gameData.getBlackUsername() != null && gameData.getWhiteUsername() == null) {
+            if (game.getBlackUsername() == null) {
+                GameData joinedGame = new GameData(game.getGameID(), game.getWhiteUsername(), user, game.getGameName(), game.getGame());
+                gameDAO.updateGame(joinedGame);
+                return true;
+            }
+
+            throw new DataAccessException("Error: team already taken");
+        }
+        throw new DataAccessException("Error: invalid team assignment");
     }
 
     public GameData createGame(AuthData authData, GameData gameData) throws DataAccessException {
@@ -50,7 +50,7 @@ public class GameService extends Service {
         }
 
         GameData game = new GameData(gameDAO.listGames().size(), null, null, gameData.getGameName(), new ChessGame());
-        if (gameDAO.createGame(gameData)) {
+        if (gameDAO.createGame(game)) {
             return game;
         }
 
