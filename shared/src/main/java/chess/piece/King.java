@@ -25,7 +25,8 @@ public class King extends PieceMoveUtils {
          return potentialMoves;
      }
 
-    private static void kingDownLeft(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void kingDownLeft(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                     ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextCol;
         int nextRow;
 
@@ -36,7 +37,8 @@ public class King extends PieceMoveUtils {
         }
     }
 
-    private static void kingDownRight(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void kingDownRight(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                      ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextCol;
         int nextRow;
 
@@ -47,7 +49,8 @@ public class King extends PieceMoveUtils {
         }
     }
 
-    private static void kingUpLeft(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void kingUpLeft(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                   ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextCol;
         int nextRow;
 
@@ -58,7 +61,8 @@ public class King extends PieceMoveUtils {
         }
     }
 
-    private static void kingUpRight(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void kingUpRight(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                    ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextCol;
         int nextRow;
 
@@ -69,7 +73,8 @@ public class King extends PieceMoveUtils {
         }
     }
 
-    private static void kingRight(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void kingRight(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                  ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextCol;
 
         nextCol = currCol + 1;
@@ -79,7 +84,8 @@ public class King extends PieceMoveUtils {
         }
     }
 
-    private static void kingLeft(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void kingLeft(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                 ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextCol;
 
         nextCol = currCol - 1;
@@ -89,7 +95,8 @@ public class King extends PieceMoveUtils {
         }
     }
 
-    private static void kingDown(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void kingDown(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                 ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextRow;
 
         nextRow = currRow - 1;
@@ -99,7 +106,8 @@ public class King extends PieceMoveUtils {
         }
     }
 
-    private static void kingUp(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void kingUp(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                               ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
          int nextRow;
 
          nextRow = currRow + 1;

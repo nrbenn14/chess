@@ -10,7 +10,8 @@ import java.util.HashSet;
 
 public class PieceMoveUtils {
 
-    private static boolean makeMove(ChessBoard board, ChessPosition position, ChessGame.TeamColor color, HashSet<ChessMove> possibleMoves, int nextRow, int nextCol) {
+    private static boolean makeMove(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
+                                    HashSet<ChessMove> possibleMoves, int nextRow, int nextCol) {
         ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
         ChessMove nextMove = new ChessMove(position, nextPosition, null);
 
@@ -30,7 +31,8 @@ public class PieceMoveUtils {
         return false;
     }
 
-    public static void makeKingKnightMove(ChessBoard board, ChessPosition position, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves, int nextRow, int nextCol) {
+    public static void makeKingKnightMove(ChessBoard board, ChessPosition position, ChessGame.TeamColor color,
+                                          HashSet<ChessMove> potentialMoves, int nextRow, int nextCol) {
         ChessPosition nextPosition = new ChessPosition(nextRow, nextCol);
         ChessMove nextMove = new ChessMove(position, nextPosition, null);
         addPotentialMove(board, nextPosition, nextMove, color, potentialMoves);
@@ -59,7 +61,9 @@ public class PieceMoveUtils {
 
         // make sure we don't break out of the board
         while (nextRow < 9 && nextCol < 9) {
-            if (makeMove(board, position, color, possibleMoves, nextRow, nextCol)) break;
+            if (makeMove(board, position, color, possibleMoves, nextRow, nextCol)) {
+                break;
+            }
 
             // incr for next check
             nextRow++;
@@ -73,7 +77,9 @@ public class PieceMoveUtils {
 
         // make sure we don't break out of the board
         while (nextRow < 9 && nextCol > 0) {
-            if (makeMove(board, position, color, possibleMoves, nextRow, nextCol)) break;
+            if (makeMove(board, position, color, possibleMoves, nextRow, nextCol)) {
+                break;
+            }
 
             // incr for next check
             nextRow++;
@@ -88,7 +94,9 @@ public class PieceMoveUtils {
 
         // make sure we don't break out of the board
         while (nextRow > 0 && nextCol < 9) {
-            if (makeMove(board, position, color, possibleMoves, nextRow, nextCol)) break;
+            if (makeMove(board, position, color, possibleMoves, nextRow, nextCol)) {
+                break;
+            }
 
             // incr for next check
             nextRow--;
@@ -102,7 +110,9 @@ public class PieceMoveUtils {
 
         // make sure we don't break out of the board
         while (nextRow > 0 && nextCol > 0) {
-            if (makeMove(board, position, color, possibleMoves, nextRow, nextCol)) break;
+            if (makeMove(board, position, color, possibleMoves, nextRow, nextCol)) {
+                break;
+            }
 
             // incr for next check
             nextRow--;
@@ -115,7 +125,9 @@ public class PieceMoveUtils {
 
         // make sure we don't break out of the board
         while (nextRow < 9) {
-            if (makeMove(board, position, color, possibleMoves, nextRow, currCol)) break;
+            if (makeMove(board, position, color, possibleMoves, nextRow, currCol)) {
+                break;
+            }
 
             // incr for next check
             nextRow++;
@@ -127,7 +139,9 @@ public class PieceMoveUtils {
 
         // make sure we don't break out of the board
         while (nextRow > 0) {
-            if (makeMove(board, position, color, possibleMoves, nextRow, currCol)) break;
+            if (makeMove(board, position, color, possibleMoves, nextRow, currCol)) {
+                break;
+            }
 
             // incr for next check
             nextRow--;
@@ -139,7 +153,9 @@ public class PieceMoveUtils {
 
         // make sure we don't break out of the board
         while (nextCol < 9) {
-            if (makeMove(board, position, color, possibleMoves, currRow, nextCol)) break;
+            if (makeMove(board, position, color, possibleMoves, currRow, nextCol)) {
+                break;
+            }
 
             // incr for next check
             nextCol++;
@@ -151,7 +167,9 @@ public class PieceMoveUtils {
 
         // make sure we don't break out of the board
         while (nextCol > 0) {
-            if (makeMove(board, position, color, possibleMoves, currRow, nextCol)) break;
+            if (makeMove(board, position, color, possibleMoves, currRow, nextCol)) {
+                break;
+            }
 
             // incr for next check
             nextCol--;

@@ -27,7 +27,8 @@ public class Knight extends PieceMoveUtils {
         return potentialMoves;
     }
 
-    private static void knightLeftDown(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void knightLeftDown(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                       ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextRow = currRow - 1;
         int nextCol = currCol - 2;
 
@@ -36,7 +37,8 @@ public class Knight extends PieceMoveUtils {
         }
     }
 
-    private static void knightLeftUp(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void knightLeftUp(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                     ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextRow = currRow + 1;
         int nextCol = currCol - 2;
 
@@ -45,7 +47,8 @@ public class Knight extends PieceMoveUtils {
         }
     }
 
-    private static void knightRightDown(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void knightRightDown(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                        ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextRow = currRow - 1;
         int nextCol = currCol + 2;
 
@@ -54,7 +57,8 @@ public class Knight extends PieceMoveUtils {
         }
     }
 
-    private static void knightRightUp(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void knightRightUp(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                      ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextRow = currRow + 1;
         int nextCol = currCol + 2;
 
@@ -63,7 +67,8 @@ public class Knight extends PieceMoveUtils {
         }
     }
 
-    private static void knightDownLeft(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void knightDownLeft(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                       ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextRow = currRow - 2;
         int nextCol = currCol - 1;
 
@@ -72,7 +77,8 @@ public class Knight extends PieceMoveUtils {
         }
     }
 
-    private static void knightDownRight(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void knightDownRight(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                        ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextRow = currRow - 2;
         int nextCol = currCol + 1;
 
@@ -81,7 +87,8 @@ public class Knight extends PieceMoveUtils {
         }
     }
 
-    private static void knightUpLeft(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void knightUpLeft(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                     ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         // up and left
         int nextRow = currRow + 2;
         int nextCol = currCol - 1;
@@ -91,7 +98,8 @@ public class Knight extends PieceMoveUtils {
         }
     }
 
-    private static void knightUpRight(ChessBoard board, ChessPosition position, int currRow, int currCol, ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
+    private static void knightUpRight(ChessBoard board, ChessPosition position, int currRow, int currCol,
+                                      ChessGame.TeamColor color, HashSet<ChessMove> potentialMoves) {
         int nextRow = currRow + 2;
         int nextCol = currCol + 1;
 
