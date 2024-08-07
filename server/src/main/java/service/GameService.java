@@ -13,7 +13,7 @@ public class GameService extends Service {
     AuthService authService = new AuthService();
 
     public boolean joinGame(AuthData authData, GameData gameData) throws DataAccessException {
-        String user = authService.tokenAuthentication(authData.getAuthToken());
+        String user = authService.authTokenAuthentication(authData.getAuthToken());
         GameData game = gameDAO.readGame(gameData.getGameID());
 
         if (game == null) {
@@ -43,7 +43,7 @@ public class GameService extends Service {
     }
 
     public GameData createGame(AuthData authData, GameData gameData) throws DataAccessException {
-        String user = authService.tokenAuthentication(authData.getAuthToken());
+        String user = authService.authTokenAuthentication(authData.getAuthToken());
 
         if (gameData.getGameName() == null) {
             throw new DataAccessException("Error: game name required");
@@ -58,7 +58,7 @@ public class GameService extends Service {
     }
 
     public ArrayList<GameData> listGames(AuthData authData) throws DataAccessException {
-        String user = authService.tokenAuthentication(authData.getAuthToken());
+        String user = authService.authTokenAuthentication(authData.getAuthToken());
         return gameDAO.listGames();
     }
 

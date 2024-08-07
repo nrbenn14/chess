@@ -12,6 +12,8 @@ import java.util.UUID;
 
 public class UserService extends Service {
 
+    AuthService authService = new AuthService();
+
     public AuthData register(UserData userData) throws DataAccessException {
         if (userData.getUsername() == null || userData.getPassword() == null) {
             throw new DataAccessException("Error: Username/password required");
@@ -63,14 +65,7 @@ public class UserService extends Service {
     }
 
     public boolean logout(AuthData authData) throws DataAccessException {
-        AuthData authData1 = authDAO.readAuth(authData.getAuthToken());
-        String authToken = null;
-        if (authData1 != null) {
-            authToken = authData1.getAuthToken();
-        }
-        else {
-            throw new DataAccessException("Error: unauthorized");
-        }
+        String authToken = authService.userTokenAuthentication(authData.getAuthToken());
         authDAO.deleteAuth(authToken);
         return true;
     }
