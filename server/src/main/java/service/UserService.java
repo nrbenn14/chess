@@ -24,6 +24,7 @@ public class UserService extends Service {
             throw new DataAccessException("Error: Username already exists");
         }
 
+        // make sure we can create a user before registering all data
         if (userDAO.createUser(userData)) {
             String authToken = UUID.randomUUID().toString();
             AuthData authData = new AuthData();
@@ -44,6 +45,7 @@ public class UserService extends Service {
         }
 
         UserData user = userDAO.readUser(userData.getUsername());
+        // check username and password before moving forward
         if (user == null) {
             throw new DataAccessException("Error: Username and/or password were incorrect");
         }
@@ -57,6 +59,7 @@ public class UserService extends Service {
         authData.setUsername(userData.getUsername());
         authData.setAuthToken(authToken);
 
+        // make sure that authentication happened
         if (authDAO.createAuth(authData)) {
             return authData;
         }

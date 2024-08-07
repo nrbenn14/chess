@@ -19,10 +19,10 @@ public class GameService extends Service {
         if (game == null) {
             throw new DataAccessException("Error: game does not exist");
         }
-
-        if (gameData.getWhiteUsername() != null) {
-            if (game.getWhiteUsername() == null) {
-                GameData joinedGame = new GameData(game.getGameID(), user, game.getBlackUsername(), game.getGameName(), game.getGame());
+        // See if one or both usernames are not taken, add player to game depending on result
+        if (gameData.getBlackUsername() != null) {
+            if (game.getBlackUsername() == null) {
+                GameData joinedGame = new GameData(game.getGameID(), game.getWhiteUsername(), user, game.getGameName(), game.getGame());
                 gameDAO.updateGame(joinedGame);
                 return true;
             }
@@ -30,9 +30,9 @@ public class GameService extends Service {
             throw new DataAccessException("Error: team already taken");
         }
 
-        else if (gameData.getBlackUsername() != null) {
-            if (game.getBlackUsername() == null) {
-                GameData joinedGame = new GameData(game.getGameID(), game.getWhiteUsername(), user, game.getGameName(), game.getGame());
+        else if (gameData.getWhiteUsername() != null) {
+            if (game.getWhiteUsername() == null) {
+                GameData joinedGame = new GameData(game.getGameID(), user, game.getBlackUsername(), game.getGameName(), game.getGame());
                 gameDAO.updateGame(joinedGame);
                 return true;
             }
