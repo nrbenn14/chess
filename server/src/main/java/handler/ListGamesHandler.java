@@ -18,7 +18,8 @@ public class ListGamesHandler extends Handler implements Route {
 
         ArrayList<GameData> gamesList = new ArrayList<>();
         for (GameData gameData : gameService.listGames(authData)) {
-            gamesList.add(new GameData(gameData.getGameID() + 1, gameData.getWhiteUsername(), gameData.getBlackUsername(), gameData.getGameName(), gameData.getGame()));
+            gamesList.add(new GameData(gameData.getGameID() + 1, gameData.getWhiteUsername(), gameData.getBlackUsername(),
+                    gameData.getGameName(), gameData.getGame()));
         }
 
         GamesList games = new GamesList(gamesList);

@@ -30,7 +30,8 @@ public class Pawn extends PieceMoveUtils {
             ChessPosition captureRight = new ChessPosition(nextRow, takeRight);
             ChessPosition captureLeft = new ChessPosition(nextRow, takeLeft);
 
-            moveWhite(board, position, currRow, color, potentialMoves, nextRow, forwardOne, forwardTwo, takeRight, captureRight, takeLeft, captureLeft);
+            moveWhite(board, position, currRow, color, potentialMoves, nextRow,
+                    forwardOne, forwardTwo, takeRight, captureRight, takeLeft, captureLeft);
         }
     }
 
@@ -102,7 +103,8 @@ public class Pawn extends PieceMoveUtils {
             ChessPosition captureRight = new ChessPosition(nextRow, takeRight);
             ChessPosition captureLeft = new ChessPosition(nextRow, takeLeft);
 
-            moveBlack(board, position, currRow, color, potentialMoves, nextRow, forwardOne, forwardTwo, takeRight, captureRight, takeLeft, captureLeft);
+            moveBlack(board, position, currRow, color, potentialMoves, nextRow,
+                    forwardOne, forwardTwo, takeRight, captureRight, takeLeft, captureLeft);
         }
     }
 

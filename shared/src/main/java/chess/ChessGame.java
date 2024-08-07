@@ -139,7 +139,9 @@ public class ChessGame {
             for (int j = 1; j < 9; j++) {
                 ChessPosition position = new ChessPosition(i,j);
                 ChessPiece piece = board.getPiece(position);
-                if (checkAllPieces(teamColor, piece, position)) return true;
+                if (checkAllPieces(teamColor, piece, position)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -192,7 +194,9 @@ public class ChessGame {
             for (int j = 1; j < 9; j++) {
                 ChessPosition position = new ChessPosition(i, j);
                 ChessPiece piece = board.getPiece(position);
-                if (checkAllPiecesCheckmate(teamColor, piece, position)) return false;
+                if (checkAllPiecesCheckmate(teamColor, piece, position)) {
+                    return false;
+                }
             }
         }
 
