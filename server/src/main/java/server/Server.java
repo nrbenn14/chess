@@ -2,8 +2,7 @@ package server;
 
 import com.google.gson.Gson;
 import dataaccess.*;
-import handler.Handler;
-import handler.RegisterHandler;
+import handler.*;
 import service.GameService;
 import service.UserService;
 import spark.*;
@@ -11,24 +10,28 @@ import spark.*;
 public class Server {
 
     private static final Gson GSON = new Gson();
-
-//    RegisterHandler registerHandler = new RegisterHandler();
+    RegisterHandler registerHandler = new RegisterHandler();
+    LoginHandler loginHandler = new LoginHandler();
+    LogoutHandler logoutHandler = new LogoutHandler();
+    ListGamesHandler listGamesHandler = new ListGamesHandler();
+    CreateGameHandler createGameHandler = new CreateGameHandler();
+    JoinGameHandler joinGameHandler = new JoinGameHandler();
+    ClearHandler clearHandler = new ClearHandler();
 
     public int run(int desiredPort) {
         Spark.port(desiredPort);
 
 
         Spark.staticFiles.location("web");
-        RegisterHandler registerHandler = new RegisterHandler();
 
         // Register your endpoints and handle exceptions here.
-        Spark.post("/user", registerHandler::handle);
-        Spark.post("/session", Handler.loginHandler);
-        Spark.delete("/session", Handler.logoutHandler);
-        Spark.get("/game", Handler.listGamesHandler);
-        Spark.post("/game", Handler.createGameHandler);
-        Spark.put("/game", Handler.joinGameHandler);
-        Spark.delete("/db", Handler.clearHandler);
+        Spark.post("/user", registerHandler);
+        Spark.post("/session", loginHandler);
+        Spark.delete("/session", logoutHandler);
+        Spark.get("/game", listGamesHandler);
+        Spark.post("/game", createGameHandler);
+        Spark.put("/game", joinGameHandler);
+        Spark.delete("/db", clearHandler);
 
         Spark.exception(Exception.class, (e, request, response) -> {
             String message = e.getMessage();
