@@ -10,22 +10,17 @@ import java.sql.SQLException;
 
 public class SQLUserDAOTests {
 
-    private static AuthData user;
     private static UserData userData;
     private static SQLUserDAO sqlUserDAO;
-    private static SQLAuthDAO sqlAuthDAO;
-    private static SQLGameDAO sqlGameDAO;
 
     @BeforeAll
     public static void init() throws Exception {
-        user = new AuthData();
+        AuthData user = new AuthData();
         user.setUsername("flynn");
         user.setAuthToken("abcde");
 
         userData = new UserData("flynn", "raindeerflotilla", "flynn@encom.com");
         sqlUserDAO = new SQLUserDAO();
-        sqlAuthDAO = new SQLAuthDAO();
-        sqlGameDAO = new SQLGameDAO();
         DatabaseManager.createDatabase();
     }
 
@@ -33,8 +28,6 @@ public class SQLUserDAOTests {
     public void setup() throws Exception {
         try (var connection = DatabaseManager.getConnection()) {
             truncateTable(connection, "user");
-            truncateTable(connection, "auth");
-            truncateTable(connection, "game");
         }
         catch (SQLException exception) {
             throw new DataAccessException(exception.getMessage());

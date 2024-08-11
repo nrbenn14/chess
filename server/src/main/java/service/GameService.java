@@ -62,7 +62,7 @@ public class GameService extends Service {
         return gameDAO.listGames();
     }
 
-    public void clear() {
+    public void clear() throws DataAccessException {
         gameDAO.clear();
     }
 }
