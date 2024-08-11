@@ -49,7 +49,15 @@ public class GameService extends Service {
             throw new DataAccessException("Error: game name required");
         }
 
-        GameData game = new GameData(gameDAO.listGames().size(), null, null, gameData.getGameName(), new ChessGame());
+        String whitePlayer = gameData.getWhiteUsername() != null ? gameData.getWhiteUsername() : user;
+        String blackPlayer = gameData.getBlackUsername() != null ? gameData.getBlackUsername() : user;
+
+//        if (gameData.getWhiteUsername() == null && gameData.getBlackUsername() != null) {
+//            blackPlayer = user;
+//            whitePlayer = null;
+//        }
+
+        GameData game = new GameData(gameDAO.listGames().size(), whitePlayer, blackPlayer, gameData.getGameName(), new ChessGame());
         if (gameDAO.createGame(game)) {
             return game;
         }

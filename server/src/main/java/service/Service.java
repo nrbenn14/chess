@@ -8,10 +8,14 @@ public class Service {
     protected GameDAO gameDAO;
     protected AuthDAO authDAO;
 
+    protected AuthDAO authMemDAO;
+    protected UserDAO userMemDAO;
+    protected GameDAO gameMemDAO;
+
     public Service() {
         userDAO = new SQLUserDAO();
         gameDAO = new SQLGameDAO();
-        authDAO = MemoryAuthDAO.getMemoryAuthDAO();
+        authDAO = new SQLAuthDAO();
     }
 
     public UserDAO getUserDAO() {

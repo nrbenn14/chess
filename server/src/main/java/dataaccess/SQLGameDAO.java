@@ -21,12 +21,13 @@ public class SQLGameDAO implements GameDAO {
             statement.setString(1, gameData.getWhiteUsername());
             statement.setString(2, gameData.getBlackUsername());
             statement.setString(3, gameData.getGameName());
-            statement.setString(4, GSON.toJson(gameData.getGame()));
+
+            var gameJSON = GSON.toJson(gameData.getGame());
+            statement.setString(4, gameJSON);
             statement.executeUpdate();
             return true;
         }
         catch (SQLException sqlException) {
-            sqlException.printStackTrace();
             throw new DataAccessException(sqlException.getMessage());
         }
     }
