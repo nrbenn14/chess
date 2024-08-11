@@ -9,7 +9,7 @@ public class Service {
     protected AuthDAO authDAO;
 
     public Service() {
-        userDAO = MemoryUserDAO.getMemoryUserDAO();
+        userDAO = new SQLUserDAO();
         gameDAO = MemoryGameDAO.getMemoryGameDAO();
         authDAO = MemoryAuthDAO.getMemoryAuthDAO();
     }
