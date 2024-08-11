@@ -69,4 +69,47 @@ public class SQLUserDAOTests {
             throw new DataAccessException(sqlException.getMessage());
         }
     }
+
+    @Test
+    @DisplayName("User Create Fail")
+    public void createUserFail() throws Exception {
+        sqlUserDAO.createUser(userData);
+        Assertions.assertThrows(DataAccessException.class, () -> sqlUserDAO.createUser(userData));
+    }
+
+    @Test
+    @DisplayName("Read User")
+    public void readUser() throws DataAccessException {
+        sqlUserDAO.createUser(userData);
+
+        UserData user = sqlUserDAO.readUser("flynn");
+        Assertions.assertEquals(userData.getUsername(), user.getUsername());
+        Assertions.assertEquals(userData.getPassword(), user.getPassword());
+        Assertions.assertEquals(userData.getEmail(), user.getEmail());
+    }
+
+    @Test
+    @DisplayName("User Not Found")
+    public void readUserFail() throws DataAccessException {
+        Assertions.assertNull(sqlUserDAO.readUser("alan"));
+    }
+
+    @Test
+    @DisplayName("Clear")
+    public void clearTest() throws DataAccessException {
+        UserData user = new UserData("tron", "ifightfortheusers", "alan@encom.com");
+        sqlUserDAO.createUser(userData);
+        sqlUserDAO.createUser(user);
+        sqlUserDAO.clear();
+
+        try (var connection = DatabaseManager.getConnection()) {
+            var statement = connection.prepareStatement("SELECT * FROM user");
+            var result = statement.executeQuery();
+
+            Assertions.assertFalse(result.isBeforeFirst());
+        }
+        catch (SQLException exception) {
+            throw new DataAccessException(exception.getMessage());
+        }
+    }
 }
