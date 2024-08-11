@@ -67,10 +67,12 @@ public class DatabaseManager {
             statement = """
                 CREATE TABLE IF NOT EXISTS game (
                 gameID INT AUTO_INCREMENT PRIMARY KEY,
-                whiteUsername VARCHAR(255) NOT NULL,
-                blackUsername VARCHAR(255) NOT NULL,
+                whiteUsername VARCHAR(255),
+                blackUsername VARCHAR(255),
                 gameName VARCHAR(255) NOT NULL,
-                chessGame TEXT NOT NULL
+                chessGame TEXT NOT NULL,
+                FOREIGN KEY (whiteUsername) REFERENCES user(username),
+                FOREIGN KEY (blackUsername) REFERENCES user(username)
                 )""";
             try (var gameTableStatement = conn.prepareStatement(statement)) {
                 gameTableStatement.executeUpdate();

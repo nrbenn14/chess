@@ -10,7 +10,7 @@ public class Service {
 
     public Service() {
         userDAO = new SQLUserDAO();
-        gameDAO = MemoryGameDAO.getMemoryGameDAO();
+        gameDAO = new SQLGameDAO();
         authDAO = MemoryAuthDAO.getMemoryAuthDAO();
     }
 

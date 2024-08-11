@@ -4,6 +4,7 @@ import chess.ChessGame;
 import com.google.gson.Gson;
 import model.GameData;
 
+import javax.net.ssl.SSLException;
 import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class SQLGameDAO implements GameDAO {
             return true;
         }
         catch (SQLException sqlException) {
+            sqlException.printStackTrace();
             throw new DataAccessException(sqlException.getMessage());
         }
     }
@@ -73,12 +75,33 @@ public class SQLGameDAO implements GameDAO {
     }
 
     @Override
-    public ArrayList<GameData> listGames() {
-        return null;
+    public ArrayList<GameData> listGames() throws DataAccessException {
+        DatabaseManager.createDatabase();
+        ArrayList<GameData> gameList = new ArrayList<>();
+        try (var connection = DatabaseManager.getConnection()) {
+            var statement = connection.prepareStatement("SELECT * FROM game");
+            var result = statement.executeQuery();
+
+            while (result.next()) {
+                gameList.add(new GameData(result.getInt("gameID"), result.getString("whiteUsername"), result.getString("blackUsername"),
+                        result.getString("gameName"), GSON.fromJson(result.getString("chessGame"), ChessGame.class)));
+            }
+            return gameList;
+        }
+        catch (SQLException sqlException) {
+            throw new DataAccessException(sqlException.getMessage());
+        }
     }
 
     @Override
-    public void clear() {
-
+    public void clear() throws DataAccessException {
+        DatabaseManager.createDatabase();
+        try (var connection = DatabaseManager.getConnection()) {
+            var statement = connection.prepareStatement("TRUNCATE TABLE game");
+            statement.executeUpdate();
+        }
+        catch (SQLException sqlException) {
+            throw new DataAccessException(sqlException.getMessage());
+        }
     }
 }
