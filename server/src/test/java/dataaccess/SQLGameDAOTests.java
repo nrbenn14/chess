@@ -71,10 +71,49 @@ public class SQLGameDAOTests {
     }
 
     @Test
+    @DisplayName("Read Game")
+    public void readGame() throws Exception {
+        try (var connection = DatabaseManager.getConnection()) {
+            var statement = connection.prepareStatement("INSERT INTO game (whiteUsername, blackUsername, gameName, chessGame) VALUES (?, ?, ?, ?)");
+
+
+            statement.setString(1, game.getWhiteUsername());
+            statement.setString(2, game.getBlackUsername());
+            statement.setString(3, game.getGameName());
+            statement.setString(4, GSON.toJson(game.getGame()));
+            statement.executeUpdate();
+
+            GameData gameData = sqlGameDAO.readGame(1);
+
+            Assertions.assertEquals(1, gameData.getGameID());
+            Assertions.assertEquals("tron", gameData.getWhiteUsername());
+            Assertions.assertEquals("sark", gameData.getBlackUsername());
+            Assertions.assertEquals("the grid", gameData.getGameName());
+        }
+        catch (SQLException sqlException) {
+            throw new DataAccessException(sqlException.getMessage());
+        }
+    }
+
+    @Test
+    @DisplayName("Read Game Fail")
+    public void readGameFail() throws Exception {
+        sqlGameDAO.createGame(game);
+        try (var connection = DatabaseManager.getConnection()) {
+            var statement = connection.prepareStatement("SELECT * FROM game where gameID = 3");
+            var result = statement.executeQuery();
+
+            Assertions.assertFalse(result.isBeforeFirst());
+        }
+        catch (SQLException sqlException) {
+            throw new DataAccessException(sqlException.getMessage());
+        }
+    }
+
+    @Test
     @DisplayName("No Game Name Creation")
     public void nullGameName() throws Exception {
         GameData gameData = new GameData(2, "flynn", "clu", "", new ChessGame());
-        sqlGameDAO.createGame(game);
         sqlGameDAO.createGame(gameData);
 
         try (var connection = DatabaseManager.getConnection()) {
@@ -88,5 +127,24 @@ public class SQLGameDAOTests {
         catch (SQLException sqlException) {
             throw new DataAccessException(sqlException.getMessage());
         }
+    }
+
+    @Test
+    @DisplayName("Update Game")
+    public void updateGame() throws Exception {
+        sqlGameDAO.createGame(game);
+        GameData gameData = new GameData(1, "sam", "rinzler", "the grid", new ChessGame());
+        sqlGameDAO.updateGame(gameData);
+
+        Assertions.assertEquals(1, sqlGameDAO.readGame(1).getGameID());
+        Assertions.assertEquals("sam", sqlGameDAO.readGame(1).getWhiteUsername());
+        Assertions.assertEquals("rinzler", sqlGameDAO.readGame(1).getBlackUsername());
+        Assertions.assertEquals("the grid", sqlGameDAO.readGame(1).getGameName());
+    }
+
+    @Test
+    @DisplayName("Update Game Fail")
+    public void updateGameFail() throws Exception {
+        Assertions.assertThrows(DataAccessException.class, () -> sqlGameDAO.updateGame(game));
     }
 }
