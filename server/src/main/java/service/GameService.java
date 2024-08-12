@@ -23,7 +23,11 @@ public class GameService extends Service {
         if (gameData.getWhiteUsername() != null && gameData.getBlackUsername() == null) {
             if (game.getWhiteUsername() == null) {
                 GameData joinedGame = new GameData(game.getGameID(), user, game.getBlackUsername(), game.getGameName(), game.getGame());
+//                game.setWhiteUsername(user);
                 gameDAO.updateGame(joinedGame);
+                return true;
+            }
+            else if (game.getWhiteUsername().equals(user)) {
                 return true;
             }
 
@@ -33,12 +37,19 @@ public class GameService extends Service {
         else if (gameData.getBlackUsername() != null && gameData.getWhiteUsername() == null) {
             if (game.getBlackUsername() == null) {
                 GameData joinedGame = new GameData(game.getGameID(), game.getWhiteUsername(), user, game.getGameName(), game.getGame());
+//                game.setBlackUsername(user);
                 gameDAO.updateGame(joinedGame);
+                return true;
+            }
+
+            else if (game.getBlackUsername().equals(user)) {
                 return true;
             }
 
             throw new DataAccessException("Error: team already taken");
         }
+
+
         throw new DataAccessException("Error: invalid team assignment");
     }
 
@@ -52,9 +63,17 @@ public class GameService extends Service {
         String whitePlayer = gameData.getWhiteUsername() != null ? gameData.getWhiteUsername() : user;
         String blackPlayer = gameData.getBlackUsername() != null ? gameData.getBlackUsername() : user;
 
+//        String whitePlayer = null;
+//        String blackPlayer = null;
+
+//        String whitePlayer = "";
+//        String blackPlayer = "";
+
 //        if (gameData.getWhiteUsername() == null && gameData.getBlackUsername() != null) {
 //            blackPlayer = user;
-//            whitePlayer = null;
+//        }
+//        if (gameData.getBlackUsername() == null && gameData.getWhiteUsername() != null) {
+//            whitePlayer = user;
 //        }
 
         GameData game = new GameData(gameDAO.listGames().size(), whitePlayer, blackPlayer, gameData.getGameName(), new ChessGame());
