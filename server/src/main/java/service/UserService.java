@@ -5,6 +5,7 @@ import dataaccess.DataAccessException;
 import dataaccess.UserDAO;
 import model.AuthData;
 import model.UserData;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.xml.crypto.Data;
 import java.util.Objects;
@@ -16,13 +17,15 @@ public class UserService extends Service {
 
     public AuthData register(UserData userData) throws DataAccessException {
         if (userData.getUsername() == null || userData.getPassword() == null) {
-            throw new DataAccessException("Error: Username/password required");
+            throw new DataAccessException("Error: username/password required");
         }
 
         UserData user = userDAO.readUser(userData.getUsername());
         if (user != null) {
-            throw new DataAccessException("Error: Username already exists");
+            throw new DataAccessException("Error: username already exists");
         }
+
+        userData = new UserData(userData.getUsername(), BCrypt.hashpw(userData.getPassword(), BCrypt.gensalt()), userData.getEmail());
 
         // make sure we can create a user before registering all data
         if (userDAO.createUser(userData)) {
@@ -35,23 +38,23 @@ public class UserService extends Service {
             return authData;
         }
 
-        throw new DataAccessException("Error: New user not created");
+        throw new DataAccessException("Error: new user not created");
 
     }
 
     public AuthData login(UserData userData) throws DataAccessException {
         if (userData.getUsername() == null || userData.getPassword() == null) {
-            throw new DataAccessException("Error: Username/password required");
+            throw new DataAccessException("Error: username/password required");
         }
 
         UserData user = userDAO.readUser(userData.getUsername());
         // check username and password before moving forward
         if (user == null) {
-            throw new DataAccessException("Error: Username and/or password were incorrect");
+            throw new DataAccessException("Error: username and/or password were incorrect");
         }
 
-        if (!Objects.equals(user.getPassword(), userData.getPassword())) {
-            throw new DataAccessException("Error: Username and/or password were incorrect");
+        if (!BCrypt.checkpw(userData.getPassword(), user.getPassword())) {
+            throw new DataAccessException("Error: username and/or password were incorrect");
         }
 
         String authToken = UUID.randomUUID().toString();
@@ -64,7 +67,7 @@ public class UserService extends Service {
             return authData;
         }
 
-        throw new DataAccessException("Error: Authentication failed");
+        throw new DataAccessException("Error: authentication failed");
     }
 
     public boolean logout(AuthData authData) throws DataAccessException {
