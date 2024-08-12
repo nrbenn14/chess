@@ -11,12 +11,15 @@ public class UserServiceTests {
     private static UserService userService;
     private static UserData user1;
     private static UserData user2;
+    private static UserData user3;
     private static AuthData auth;
 
     @BeforeAll
     public static void init() {
         user1 = new UserData("tron", "fightforusers", "alan1@encom.com");
         user2 = new UserData("clu", "raindeerflotilla", "flynn@encom.com");
+        user3 = new UserData("flynn", "raindeer flotilla", "flynn@encom.com");
+
         auth = new AuthData();
         auth.setAuthToken("thegrid");
         auth.setUsername("tron");
@@ -59,19 +62,24 @@ public class UserServiceTests {
     @DisplayName("Login Test")
     public void loginTest() throws Exception {
         try {
-            AuthData authData = userService.login(user1);
-            Assertions.assertEquals("tron", authData.getUsername());
+            AuthData authData = userService.register(user3);
+            userService.logout(authData);
+            authData = userService.login(user3);
+            Assertions.assertEquals("flynn", authData.getUsername());
             Assertions.assertNotNull(authData.getAuthToken());
         }
-        catch (DataAccessException e) {
-            throw new RuntimeException(e);
+        catch (DataAccessException dataAccessException) {
+            throw new RuntimeException(dataAccessException);
         }
     }
 
     @Test
     @DisplayName("Bad Password")
     public void badLoginTest() throws Exception {
-        UserData user = new UserData("tron", "nofightuserstoday", "alan1@encom.com");
+        UserData user = new UserData("rom", "nofightuserstoday", "somedude@encom.com");
+        AuthData authData = userService.register(user);
+        userService.logout(authData);
+        user.setPassword("fightuserstomorrow");
         Assertions.assertThrows(DataAccessException.class, () -> userService.login(user));
     }
 

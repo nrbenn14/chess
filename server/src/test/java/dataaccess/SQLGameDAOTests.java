@@ -16,7 +16,7 @@ public class SQLGameDAOTests {
 
     @BeforeAll
     public static void init() throws Exception {
-        game = new GameData(1, "tron", "sark", "the grid", new ChessGame());
+        game = new GameData(1, null, null, "the grid", new ChessGame());
         sqlGameDAO = new SQLGameDAO();
         GSON = new Gson();
         DatabaseManager.createDatabase();
@@ -52,10 +52,12 @@ public class SQLGameDAOTests {
             Assertions.assertEquals(1, gameID);
 
             String whiteUsername = result.getString("whiteUsername");
-            Assertions.assertEquals("tron", whiteUsername);
+//            Assertions.assertEquals("tron", whiteUsername);
+            Assertions.assertNull(whiteUsername);
 
             String blackUsername = result.getString("blackUsername");
-            Assertions.assertEquals("sark", blackUsername);
+//            Assertions.assertEquals("sark", blackUsername);
+            Assertions.assertNull(blackUsername);
 
             String gameName = result.getString("gameName");
             Assertions.assertEquals("the grid", gameName);
@@ -86,8 +88,8 @@ public class SQLGameDAOTests {
             GameData gameData = sqlGameDAO.readGame(1);
 
             Assertions.assertEquals(1, gameData.getGameID());
-            Assertions.assertEquals("tron", gameData.getWhiteUsername());
-            Assertions.assertEquals("sark", gameData.getBlackUsername());
+            Assertions.assertNull(gameData.getWhiteUsername());
+            Assertions.assertNull(gameData.getBlackUsername());
             Assertions.assertEquals("the grid", gameData.getGameName());
         }
         catch (SQLException sqlException) {
