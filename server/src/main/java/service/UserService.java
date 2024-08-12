@@ -25,7 +25,12 @@ public class UserService extends Service {
             throw new DataAccessException("Error: username already exists");
         }
 
-        userData = new UserData(userData.getUsername(), BCrypt.hashpw(userData.getPassword(), BCrypt.gensalt()), userData.getEmail());
+        userData = new UserData(
+                userData.getUsername(),
+                BCrypt.hashpw(userData.getPassword(),
+                BCrypt.gensalt()),
+                userData.getEmail()
+        );
 
         // make sure we can create a user before registering all data
         if (userDAO.createUser(userData)) {

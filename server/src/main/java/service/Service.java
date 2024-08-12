@@ -16,6 +16,10 @@ public class Service {
         userDAO = new SQLUserDAO();
         gameDAO = new SQLGameDAO();
         authDAO = new SQLAuthDAO();
+
+        userMemDAO = MemoryUserDAO.getMemoryUserDAO();
+        gameMemDAO = MemoryGameDAO.getMemoryGameDAO();
+        authMemDAO = MemoryAuthDAO.getMemoryAuthDAO();
     }
 
     public UserDAO getUserDAO() {
