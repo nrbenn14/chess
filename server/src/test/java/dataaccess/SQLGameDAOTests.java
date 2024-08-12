@@ -12,13 +12,13 @@ import java.sql.SQLException;
 public class SQLGameDAOTests {
     private static GameData game;
     private static SQLGameDAO sqlGameDAO;
-    private static Gson GSON;
+    private static Gson gson;
 
     @BeforeAll
     public static void init() throws Exception {
         game = new GameData(1, null, null, "the grid", new ChessGame());
         sqlGameDAO = new SQLGameDAO();
-        GSON = new Gson();
+        gson = new Gson();
         DatabaseManager.createDatabase();
     }
 
@@ -63,7 +63,7 @@ public class SQLGameDAOTests {
             Assertions.assertEquals("the grid", gameName);
 
             String game =  result.getString("chessGame");
-            String gameJSON = GSON.toJson(new ChessGame());
+            String gameJSON = gson.toJson(new ChessGame());
             Assertions.assertEquals(game, gameJSON);
 
         }
@@ -82,7 +82,7 @@ public class SQLGameDAOTests {
             statement.setString(1, game.getWhiteUsername());
             statement.setString(2, game.getBlackUsername());
             statement.setString(3, game.getGameName());
-            statement.setString(4, GSON.toJson(game.getGame()));
+            statement.setString(4, gson.toJson(game.getGame()));
             statement.executeUpdate();
 
             GameData gameData = sqlGameDAO.readGame(1);

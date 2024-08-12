@@ -21,13 +21,7 @@ public class SQLAuthDAOTests {
 
     @BeforeEach
     public void setup() throws Exception {
-        try (var connection = DatabaseManager.getConnection()) {
-            var statement = connection.prepareStatement("TRUNCATE TABLE auth");
-            statement.executeUpdate();
-        }
-        catch (SQLException sqlException) {
-            throw new DataAccessException(sqlException.getMessage());
-        }
+        sqlAuthDAO.clear();
     }
 
     @Test
@@ -52,6 +46,11 @@ public class SQLAuthDAOTests {
     @Test
     @DisplayName("Repeat Authentication")
     public void repeatAuth() throws Exception {
+        prepDatabase();
+        Assertions.assertThrows(DataAccessException.class, () -> sqlAuthDAO.createAuth(authData));
+    }
+
+    private static void prepDatabase() throws DataAccessException {
         try (var connection = DatabaseManager.getConnection()) {
             var statement = connection.prepareStatement("INSERT INTO auth (authToken, username) VALUES (?, ?)");
             statement.setString(1, authData.getAuthToken());
@@ -61,23 +60,12 @@ public class SQLAuthDAOTests {
         catch (SQLException sqlException) {
             throw new DataAccessException(sqlException.getMessage());
         }
-
-        Assertions.assertThrows(DataAccessException.class, () -> sqlAuthDAO.createAuth(authData));
     }
 
     @Test
     @DisplayName("Read Auth")
     public void readAuth() throws Exception {
-        try (var connection = DatabaseManager.getConnection()) {
-            var statement = connection.prepareStatement("INSERT INTO auth (authToken, username) VALUES (?, ?)");
-            statement.setString(1, authData.getAuthToken());
-            statement.setString(2, authData.getUsername());
-            statement.executeUpdate();
-        }
-        catch (SQLException sqlException) {
-            throw new DataAccessException(sqlException.getMessage());
-        }
-
+        prepDatabase();
         AuthData authData1 = sqlAuthDAO.readAuth("abcde");
 
         Assertions.assertEquals("abcde", authData1.getAuthToken());
@@ -93,16 +81,7 @@ public class SQLAuthDAOTests {
     @Test
     @DisplayName("Delete Auth")
     public void deleteAuth() throws Exception {
-        try (var connection = DatabaseManager.getConnection()) {
-            var statement = connection.prepareStatement("INSERT INTO auth (authToken, username) VALUES (?, ?)");
-            statement.setString(1, authData.getAuthToken());
-            statement.setString(2, authData.getUsername());
-            statement.executeUpdate();
-        }
-        catch (SQLException sqlException) {
-            throw new DataAccessException(sqlException.getMessage());
-        }
-
+        prepDatabase();
         sqlAuthDAO.deleteAuth(authData.getAuthToken());
 
         try (var connection = DatabaseManager.getConnection()) {
