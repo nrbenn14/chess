@@ -22,9 +22,8 @@ public class GameService extends Service {
         // See if one or both usernames are not taken, add player to game depending on result
         if (gameData.getWhiteUsername() != null && gameData.getBlackUsername() == null) {
             if (game.getWhiteUsername() == null) {
-                GameData joinedGame = new GameData(game.getGameID(), user, game.getBlackUsername(), game.getGameName(), game.getGame());
-//                game.setWhiteUsername(user);
-                gameDAO.updateGame(joinedGame);
+                game.setWhiteUsername(user);
+                gameDAO.updateGame(game);
                 return true;
             }
             else if (game.getWhiteUsername().equals(user)) {
@@ -36,9 +35,8 @@ public class GameService extends Service {
 
         else if (gameData.getBlackUsername() != null && gameData.getWhiteUsername() == null) {
             if (game.getBlackUsername() == null) {
-                GameData joinedGame = new GameData(game.getGameID(), game.getWhiteUsername(), user, game.getGameName(), game.getGame());
-//                game.setBlackUsername(user);
-                gameDAO.updateGame(joinedGame);
+                game.setBlackUsername(user);
+                gameDAO.updateGame(game);
                 return true;
             }
 
@@ -62,19 +60,6 @@ public class GameService extends Service {
 
         String whitePlayer = gameData.getWhiteUsername() != null ? gameData.getWhiteUsername() : user;
         String blackPlayer = gameData.getBlackUsername() != null ? gameData.getBlackUsername() : user;
-
-//        String whitePlayer = null;
-//        String blackPlayer = null;
-
-//        String whitePlayer = "";
-//        String blackPlayer = "";
-
-//        if (gameData.getWhiteUsername() == null && gameData.getBlackUsername() != null) {
-//            blackPlayer = user;
-//        }
-//        if (gameData.getBlackUsername() == null && gameData.getWhiteUsername() != null) {
-//            whitePlayer = user;
-//        }
 
         GameData game = new GameData(gameDAO.listGames().size(), whitePlayer, blackPlayer, gameData.getGameName(), new ChessGame());
         if (gameDAO.createGame(game)) {

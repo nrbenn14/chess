@@ -33,13 +33,13 @@ public class Server {
         Spark.put("/game", joinGameHandler);
         Spark.delete("/db", clearHandler);
 
-        Spark.exception(Exception.class, (e, request, response) -> {
-            String message = e.getMessage();
+        Spark.exception(Exception.class, (exception, request, response) -> {
+            String message = exception.getMessage();
             switch (message) {
-                case "Error: Username/password required", "Error: game name required",
+                case "Error: username/password required", "Error: game name required",
                         "Error: invalid team color", "Error: invalid game ID" -> response.status(400);
-                case "Error: Username and/or password were incorrect", "Error: unauthorized" -> response.status(401);
-                case "Error: Username already exists", "Error: team already taken" -> response.status(403);
+                case "Error: username and/or password were incorrect", "Error: unauthorized" -> response.status(401);
+                case "Error: username already exists", "Error: team already taken" -> response.status(403);
                 default -> response.status(500);
             }
 
